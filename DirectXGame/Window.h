@@ -1,15 +1,23 @@
-#pragma once
-#include <Windows.h>
+#include <windows.h>
 
-class Window {
+class Window
+{
+private:
+    HINSTANCE m_hInstance;
+    HINSTANCE m_hPrevInstance;
+    PWSTR m_pCmdLine;
+    int m_nCmdShow;
+    HWND m_hwnd = nullptr;
+    const wchar_t* m_className = L"Window Class";
+    const wchar_t* m_windowTitle = L"DirectX Application";
+
+    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 public:
-    Window();
+    Window(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
     ~Window();
 
-    void Run();
-
-private:
-    HWND m_hwnd;
-    bool m_is_running;
-    static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    void RegisterWindowClass(HINSTANCE hInstance);
+    void CreateAppWindow(HINSTANCE hInstance);
+    HWND GetHandle() const { return m_hwnd; }
 };

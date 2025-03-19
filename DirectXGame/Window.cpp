@@ -1,75 +1,67 @@
-#include "Window.h"
-#include <assert.h>
 #include <iostream>
+#include "Window.h"
 
-LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+Window::Window(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+    : m_hInstance(hInstance), m_hPrevInstance(hPrevInstance),
+    m_pCmdLine(pCmdLine), m_nCmdShow(nCmdShow)
 {
-    switch (msg)
-    {
-    case WM_CLOSE:
-        DestroyWindow(hwnd);
-        return 0;
-
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
-
-    default:
-        return DefWindowProc(hwnd, msg, wParam, lParam);
-    }
-}
-
-Window::Window()
-{
-    // Define and Register Window Class
-    WNDCLASSEX wc = {};
-    wc.cbSize = sizeof(WNDCLASSEX);
-    wc.lpszClassName = L"WindowClass";
-    wc.lpfnWndProc = WndProc;
-    wc.hInstance = NULL;
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-
-    assert(::RegisterClassEx(&wc));
-
-    // Create Window
-    m_hwnd = ::CreateWindowEx(0, L"WindowClass", L"DirectX Application", WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL, NULL, this);
-
-    assert(m_hwnd);
-
-    // Display Window
-    ::ShowWindow(m_hwnd, SW_SHOW);
-    ::UpdateWindow(m_hwnd);
+    RegisterWindowClass(hInstance);
+    CreateAppWindow(hInstance);
 }
 
 Window::~Window()
 {
-    if (m_hwnd)
+
+}
+
+void Window::RegisterWindowClass(HINSTANCE hInstance)
+{
+    WNDCLASS wc = { };
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = m_className;
+
+    if (!RegisterClass(&wc))
     {
-        ::DestroyWindow(m_hwnd);
+        std::cerr << "Error: Failed to register window class!" << std::endl;
+        exit(-1);
     }
 }
 
-void Window::Run()
+void Window::CreateAppWindow(HINSTANCE hInstance)
 {
-    MSG msg = {};
-    m_is_running = true;
+    HWND hwnd = CreateWindowEx(
+        0,                              // Optional window styles.
+        m_className,                   // Window class
+        m_windowTitle,                 // Window text
+        WS_OVERLAPPEDWINDOW,            // Window style
 
-    while (m_is_running)
-    {
-        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-        {
-            if (msg.message == WM_QUIT)
-            {
-                m_is_running = false;
-                break;
-            }
+        // Size and position
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
+        NULL,         // Parent window    
+        NULL,         // Menu
+        hInstance,    // Instance handle
+        NULL          // Additional application data
+    );
 
-        Sleep(0);
+    if (!hwnd) {
+        std::cerr << "Failed to create window" << std::endl;
+        exit(-1);
     }
+    
+    m_hwnd = hwnd;
+    ShowWindow(m_hwnd, m_nCmdShow);
+}
+
+LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch (uMsg)
+    {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+    }
+
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

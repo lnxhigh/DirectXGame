@@ -15,10 +15,12 @@
     <ClCompile Include="Window.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
 </Project>
