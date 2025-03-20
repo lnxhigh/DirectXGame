@@ -1,9 +1,9 @@
 #include "Window.h"
 #include "Renderer.h"
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+int WINAPI wWinMain(HINSTANCE h_instance, HINSTANCE h_prev_instance, PWSTR p_cmd_line, int cmd_show)
 {
-    Window window = Window(hInstance, hPrevInstance, pCmdLine, nCmdShow);
+    Window window = Window(h_instance, h_prev_instance, p_cmd_line, cmd_show);
     Renderer renderer = Renderer(window.GetHandle());
 
     MSG msg = { };

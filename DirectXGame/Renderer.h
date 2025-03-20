@@ -6,15 +6,15 @@ class Renderer
 private:
     ID3D11Device* m_device = nullptr;
     ID3D11DeviceContext* m_context = nullptr;
-    IDXGISwapChain* m_swapChain = nullptr;
-    ID3D11RenderTargetView* m_renderTargetView = nullptr;
+    IDXGISwapChain* m_swap_chain = nullptr;
+    ID3D11RenderTargetView* m_render_target_view = nullptr;
 
 public:
-    Renderer(HWND hWnd);
+    Renderer(HWND hwnd);
     ~Renderer();
 
     void InitDevice();
-    void InitSwapChain(HWND hWnd);
+    void InitSwapChain(HWND hwnd);
     void InitRenderTarget();
     void Render();
 };
