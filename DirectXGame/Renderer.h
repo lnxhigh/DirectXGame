@@ -1,5 +1,8 @@
 #include <d3d11.h>
 #include <dxgi.h>
+#include <wrl/client.h>
+
+using Microsoft::WRL::ComPtr;
 
 class Renderer
 {
@@ -8,11 +11,11 @@ private:
     UINT m_width = 0;
     UINT m_height = 0;
 
-    ID3D11Device* m_device = nullptr;
-    ID3D11DeviceContext* m_context = nullptr;
-    IDXGISwapChain* m_swap_chain = nullptr;
-    ID3D11RenderTargetView* m_render_target_view = nullptr;
-    ID3D11DepthStencilView* m_depth_stencil_view = nullptr;
+    ComPtr<ID3D11Device> m_device = nullptr;
+    ComPtr<ID3D11DeviceContext> m_context = nullptr;
+    ComPtr<IDXGISwapChain> m_swap_chain = nullptr;
+    ComPtr<ID3D11RenderTargetView> m_render_target_view = nullptr;
+    ComPtr<ID3D11DepthStencilView> m_depth_stencil_view = nullptr;
 
 public:
     Renderer(HWND hwnd);

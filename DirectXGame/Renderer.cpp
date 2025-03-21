@@ -1,6 +1,9 @@
 #include <iostream>
 #include <assert.h>
+#include <wrl/client.h>
 #include "Renderer.h"
+
+using Microsoft::WRL::ComPtr;
 
 Renderer::Renderer(HWND hwnd)
 {
@@ -12,10 +15,7 @@ Renderer::Renderer(HWND hwnd)
 
 Renderer::~Renderer()
 {
-    if (m_render_target_view) m_render_target_view->Release();
-    if (m_swap_chain) m_swap_chain->Release();
-    if (m_context) m_context->Release();
-    if (m_device) m_device->Release();
+    
 }
 
 void Renderer::InitWindowInfo(HWND hwnd)
@@ -30,36 +30,69 @@ void Renderer::InitWindowInfo(HWND hwnd)
 
 void Renderer::InitDevice()
 {
-    D3D_FEATURE_LEVEL featureLevel;
+    D3D_FEATURE_LEVEL feature_level;
+
     HRESULT hr = D3D11CreateDevice(
-        nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
-        D3D11_SDK_VERSION, &m_device, &featureLevel, &m_context
+        0, // default adapter
+        D3D_DRIVER_TYPE_HARDWARE,
+        0, // no software device
+        0,
+        0, 0, // default feature level array
+        D3D11_SDK_VERSION,
+        m_device.GetAddressOf(),
+        &feature_level,
+        m_context.GetAddressOf()
     );
 
-    if (FAILED(hr)) {
-        std::cerr << "Failed to create D3D11 device!" << std::endl;
+    if (FAILED(hr))
+    {
+        std::cerr << "Error: Failed to create D3D11 device" << std::endl;
         exit(-1);
     }
+    
+    if (feature_level != D3D_FEATURE_LEVEL_11_0)
+    {
+        std::cerr << "Error: Direct3D Feature Level 11 unsupported" << std::endl;
+        exit(-1);
+    }
+
 }
 
 void Renderer::InitSwapChain()
 {
-    DXGI_SWAP_CHAIN_DESC desc = { };
-    desc.BufferCount = 2;
+    DXGI_SWAP_CHAIN_DESC desc;
+
     desc.BufferDesc.Width = m_width;
     desc.BufferDesc.Height = m_height;
-    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     desc.BufferDesc.RefreshRate.Numerator = 60;
     desc.BufferDesc.RefreshRate.Denominator = 1;
-    desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    desc.OutputWindow = m_hwnd;
-    desc.SampleDesc.Count = 1;
-    desc.Windowed = TRUE;
+    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+    desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-    IDXGIFactory* factory = nullptr;
-    CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
-    HRESULT hr = factory->CreateSwapChain(m_device, &desc, &m_swap_chain);
-    factory->Release();
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 0;
+    
+    desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    desc.BufferCount = 1;
+    desc.OutputWindow = m_hwnd;
+    desc.Windowed = true;
+    desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+    desc.Flags = 0;
+
+    // Get the IDXGIFactory interface
+
+    ComPtr<IDXGIDevice> dxgi_device = nullptr;
+    ComPtr<IDXGIAdapter> dxgi_adapter = nullptr;
+    ComPtr<IDXGIFactory> dxgi_factory = nullptr;
+
+    m_device->QueryInterface(__uuidof(IDXGIDevice), (void**)dxgi_device.GetAddressOf());
+    dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)dxgi_adapter.GetAddressOf());
+    dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)dxgi_factory.GetAddressOf());
+    
+    // Create the swap chain
+
+    HRESULT hr = dxgi_factory->CreateSwapChain(m_device.Get(), &desc, m_swap_chain.GetAddressOf());
 
     if (FAILED(hr)) {
         std::cerr << "Error: Failed to create SwapChain" << std::endl;
@@ -69,12 +102,14 @@ void Renderer::InitSwapChain()
 
 void Renderer::InitRenderTarget()
 {
-    ID3D11Texture2D* back_buffer = nullptr;
-    m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&back_buffer);
-    
-    assert(back_buffer);
-    HRESULT hr = m_device->CreateRenderTargetView(back_buffer, nullptr, &m_render_target_view);
-    back_buffer->Release();
+    ComPtr<ID3D11Texture2D> buffer = nullptr;
+    m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**) buffer.GetAddressOf());
+    assert(buffer);
+
+    HRESULT hr = m_device->CreateRenderTargetView(
+        buffer.Get(), nullptr, 
+        m_render_target_view.GetAddressOf()
+    );
 
     if (FAILED(hr)) {
         std::cerr << "Error: Failed to create RenderTargetView" << std::endl;
@@ -101,12 +136,13 @@ void Renderer::InitDepthStencilBuffer()
     
     // Bind Depth Stencil Buffer
 
-    ID3D11Texture2D* buffer;
-    m_device->CreateTexture2D(&desc, 0, &buffer);
+    ComPtr<ID3D11Texture2D> buffer;
+    ComPtr<ID3D11DepthStencilView> view;
+
+    m_device->CreateTexture2D(&desc, 0, buffer.GetAddressOf());
     assert(buffer);
 
-    HRESULT hr = m_device->CreateDepthStencilView(buffer, 0, &m_depth_stencil_view);
-    buffer->Release();
+    HRESULT hr = m_device->CreateDepthStencilView(buffer.Get(), 0, view.GetAddressOf());
     
     if (FAILED(hr))
     {
@@ -118,6 +154,6 @@ void Renderer::InitDepthStencilBuffer()
 void Renderer::Render()
 {
     float color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    m_context->ClearRenderTargetView(m_render_target_view, color);
+    m_context->ClearRenderTargetView(m_render_target_view.Get(), color);
     m_swap_chain->Present(1, 0);
 }
