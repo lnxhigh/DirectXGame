@@ -26,5 +26,6 @@ public:
     void InitSwapChain();
     void InitRenderTarget();
     void InitDepthStencilBuffer();
+    void InitViewport();
     void Render();
 };

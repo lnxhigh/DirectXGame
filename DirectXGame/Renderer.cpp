@@ -60,7 +60,7 @@ void Renderer::InitDevice()
 
 void Renderer::InitSwapChain()
 {
-    DXGI_SWAP_CHAIN_DESC desc;
+    DXGI_SWAP_CHAIN_DESC desc = { };
 
     desc.BufferDesc.Width = m_width;
     desc.BufferDesc.Height = m_height;
@@ -119,7 +119,8 @@ void Renderer::InitRenderTarget()
 
 void Renderer::InitDepthStencilBuffer()
 {
-    D3D11_TEXTURE2D_DESC desc;
+    D3D11_TEXTURE2D_DESC desc = { };
+
     desc.Width = m_width;
     desc.Height = m_height;
     desc.MipLevels = 1;
@@ -149,6 +150,20 @@ void Renderer::InitDepthStencilBuffer()
         std::cerr << "Error: Failed to create DepthStencilView" << std::endl;
         exit(-1);
     }
+}
+
+void Renderer::InitViewport()
+{
+    D3D11_VIEWPORT viewport = { };
+
+    viewport.TopLeftX = 0.0f;
+    viewport.TopLeftY = 0.0f;
+    viewport.Width = (float) m_width;
+    viewport.Height = (float) m_height;
+    viewport.MinDepth = 0.0f;
+    viewport.MaxDepth = 1.0f;
+
+    m_context->RSSetViewports(1, &viewport);
 }
 
 void Renderer::Render()
