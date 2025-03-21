@@ -4,8 +4,9 @@
 
 Renderer::Renderer(HWND hwnd)
 {
+    InitWindowInfo(hwnd);
     InitDevice();
-    InitSwapChain(hwnd);
+    InitSwapChain();
     InitRenderTarget();
 }
 
@@ -15,6 +16,16 @@ Renderer::~Renderer()
     if (m_swap_chain) m_swap_chain->Release();
     if (m_context) m_context->Release();
     if (m_device) m_device->Release();
+}
+
+void Renderer::InitWindowInfo(HWND hwnd)
+{
+    m_hwnd = hwnd;
+
+    RECT rect;
+    GetClientRect(hwnd, &rect);
+    m_width = rect.right - rect.left;
+    m_height = rect.bottom - rect.top;
 }
 
 void Renderer::InitDevice()
@@ -31,20 +42,17 @@ void Renderer::InitDevice()
     }
 }
 
-void Renderer::InitSwapChain(HWND hwnd)
+void Renderer::InitSwapChain()
 {
-    RECT rect;
-    GetClientRect(hwnd, &rect);
-    UINT width = rect.right - rect.left;
-    UINT height = rect.bottom - rect.top;
-
     DXGI_SWAP_CHAIN_DESC desc = { };
-    desc.BufferCount = 1;
-    desc.BufferDesc.Width = width;
-    desc.BufferDesc.Height = height;
+    desc.BufferCount = 2;
+    desc.BufferDesc.Width = m_width;
+    desc.BufferDesc.Height = m_height;
     desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.BufferDesc.RefreshRate.Numerator = 60;
+    desc.BufferDesc.RefreshRate.Denominator = 1;
     desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    desc.OutputWindow = hwnd;
+    desc.OutputWindow = m_hwnd;
     desc.SampleDesc.Count = 1;
     desc.Windowed = TRUE;
 
@@ -61,15 +69,48 @@ void Renderer::InitSwapChain(HWND hwnd)
 
 void Renderer::InitRenderTarget()
 {
-    ID3D11Texture2D* backBuffer = nullptr;
-    m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+    ID3D11Texture2D* back_buffer = nullptr;
+    m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&back_buffer);
     
-    assert(backBuffer);
-    HRESULT hr = m_device->CreateRenderTargetView(backBuffer, nullptr, &m_render_target_view);
-    backBuffer->Release();
+    assert(back_buffer);
+    HRESULT hr = m_device->CreateRenderTargetView(back_buffer, nullptr, &m_render_target_view);
+    back_buffer->Release();
 
     if (FAILED(hr)) {
         std::cerr << "Error: Failed to create RenderTargetView" << std::endl;
+        exit(-1);
+    }
+}
+
+void Renderer::InitDepthStencilBuffer()
+{
+    D3D11_TEXTURE2D_DESC desc;
+    desc.Width = m_width;
+    desc.Height = m_height;
+    desc.MipLevels = 1;
+    desc.ArraySize = 1;
+    desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+    desc.SampleDesc.Count = 1; // No Multisampling
+    desc.SampleDesc.Quality = 0;
+
+    desc.Usage = D3D11_USAGE_DEFAULT;
+    desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    desc.CPUAccessFlags = 0;
+    desc.MiscFlags = 0;
+    
+    // Bind Depth Stencil Buffer
+
+    ID3D11Texture2D* buffer;
+    m_device->CreateTexture2D(&desc, 0, &buffer);
+    assert(buffer);
+
+    HRESULT hr = m_device->CreateDepthStencilView(buffer, 0, &m_depth_stencil_view);
+    buffer->Release();
+    
+    if (FAILED(hr))
+    {
+        std::cerr << "Error: Failed to create DepthStencilView" << std::endl;
         exit(-1);
     }
 }
