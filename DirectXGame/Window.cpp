@@ -1,9 +1,8 @@
 #include <iostream>
 #include "Window.h"
 
-Window::Window(HINSTANCE h_instance, HINSTANCE h_prev_instance, PWSTR p_cmd_line, int cmd_show)
-    : m_h_instance(h_instance), m_h_prev_instance(h_prev_instance),
-    m_p_cmd_line(p_cmd_line), m_cmd_show(cmd_show)
+Window::Window(HINSTANCE h_instance, int cmd_show)
+    : m_h_instance(h_instance), m_cmd_show(cmd_show)
 {
     RegisterWindowClass(h_instance);
     CreateAppWindow(h_instance);

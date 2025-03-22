@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Timer.h"
 #include <windows.h>
 
@@ -101,3 +103,4 @@ void Timer::Tick()
         m_delta_time = 0.0;
     }
 }
+
