@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Timer.h"
 #include <windows.h>
+#include "Timer.h"
 
 Timer::Timer()
     : m_seconds_per_count(0.0), 

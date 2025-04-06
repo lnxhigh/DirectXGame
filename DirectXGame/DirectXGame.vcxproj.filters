@@ -18,24 +18,42 @@
     <ClCompile Include="Window.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Timer.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Timer.h">
       <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Vertex.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectXGame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.hlsl" />
+    <FxCompile Include="PixelShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ShaderCommon.hlsl" />
   </ItemGroup>
 </Project>
