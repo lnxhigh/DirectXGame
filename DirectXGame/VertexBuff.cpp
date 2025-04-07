@@ -1,14 +1,17 @@
 #include "VertexBuffer.h"
 
-bool VertexBuffer::Init(ID3D11Device* device)
+VertexBuffer::VertexBuffer(ID3D11Device* device)
 {
     m_device = device;
-    
-    return true;
 }
 
-bool VertexBuffer::Load(void* vertices, UINT size_vertex, UINT size_list,
-    void* shader_byte_code, SIZE_T size_byte_code)
+VertexBuffer::~VertexBuffer()
+{
+
+}
+
+bool VertexBuffer::Load(void* vertices, unsigned int size_vertex, unsigned int size_list,
+    void* shader_byte_code, unsigned int size_byte_code)
 {
     D3D11_BUFFER_DESC desc = { };
     desc.Usage = D3D11_USAGE_DEFAULT;
@@ -20,11 +23,14 @@ bool VertexBuffer::Load(void* vertices, UINT size_vertex, UINT size_list,
     D3D11_SUBRESOURCE_DATA init_data = { };
     init_data.pSysMem = vertices;
 
+    // Create vertex buffer
+
     ComPtr<ID3D11Buffer> buffer = nullptr;
     HRESULT hr_buffer = m_device->CreateBuffer(&desc, &init_data, buffer.GetAddressOf());
 
     if (FAILED(hr_buffer))
     {
+        OutputDebugStringA("Error: Failed to create vertex buffer\n");
         return false;
     }
 

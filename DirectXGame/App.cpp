@@ -1,14 +1,10 @@
 #include "App.h"
-#include "Window.h"
-#include "Renderer.h"
-#include "Timer.h"
 
-App::App(void* h_instance, int cmd_show)
-	: m_window(nullptr), m_renderer(nullptr), m_timer(nullptr)
+App::App(HINSTANCE h_instance, int cmd_show)
 {
-    m_window = std::make_unique<Window>((HINSTANCE)h_instance, cmd_show);
-    m_renderer = std::make_unique<Renderer>(m_window->GetHwnd());
-    m_timer = std::make_unique<Timer>();
+    m_window.Init(h_instance, cmd_show);
+    m_renderer.Init(&m_window);
+    m_timer = Timer();
 }
 
 App::~App()
@@ -34,8 +30,8 @@ int App::Run()
         }
         else
         {
-            m_timer->Tick();
-            m_renderer->Render();
+            m_timer.Tick();
+            m_renderer.Render();
         }
     }
 
