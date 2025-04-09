@@ -1,4 +1,6 @@
 #include "VertexBuffer.h"
+#include "Vertex.h"
+#include <stddef.h>
 
 bool VertexBuffer::Init(ID3D11Device* device)
 {
@@ -33,7 +35,8 @@ bool VertexBuffer::Load(void* vertices, UINT size_vertex, UINT size_list,
     // InputSlotClass - InstanceDataStepRate
 
     D3D11_INPUT_ELEMENT_DESC layout[] = {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, position), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(Vertex, color), D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
 
     ComPtr<ID3D11InputLayout> input_layout = nullptr;

@@ -10,6 +10,12 @@
     <Filter Include="Utility">
       <UniqueIdentifier>{b930f7c0-e674-4fe7-8e25-8497fb371850}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Buffer">
+      <UniqueIdentifier>{1947c189-a835-4f5c-a9da-366d985d148f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Shader">
+      <UniqueIdentifier>{2c790de8-1974-4e07-b8c8-168b44943a5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,19 +39,25 @@
     <ClCompile Include="SwapChain.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="ViewportManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="VertexBuffer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="Context.cpp" />
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>Engine\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixBuffer.cpp">
+      <Filter>Engine\Buffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -70,28 +82,40 @@
     <ClInclude Include="SwapChain.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="ViewportManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Context.h" />
     <ClInclude Include="VertexBuffer.h">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="Context.h" />
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Engine\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixBuffer.h">
+      <Filter>Engine\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectXGame.rc" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl" />
-    <FxCompile Include="PixelShader.hlsl" />
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Engine\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Engine\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ShaderCommon.hlsl" />
+    <None Include="ShaderCommon.hlsl">
+      <Filter>Engine\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

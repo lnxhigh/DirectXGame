@@ -1,73 +1,147 @@
 #include "Renderer.h"
+#include "Window.h"
 #include "Vertex.h"
 
+using namespace DirectX;
 using Microsoft::WRL::ComPtr;
+
+Vertex vertices[] =
+{
+    { {-1.0f, -1.0f, -1.0f}, {1, 0, 0, 1} }, // 0
+    { {-1.0f, +1.0f, -1.0f}, {0, 1, 0, 1} }, // 1
+    { {+1.0f, +1.0f, -1.0f}, {0, 0, 1, 1} }, // 2
+    { {+1.0f, -1.0f, -1.0f}, {1, 1, 0, 1} }, // 3
+    { {-1.0f, -1.0f, +1.0f}, {1, 0, 1, 1} }, // 4
+    { {-1.0f, +1.0f, +1.0f}, {0, 1, 1, 1} }, // 5
+    { {+1.0f, +1.0f, +1.0f}, {1, 1, 1, 1} }, // 6
+    { {+1.0f, -1.0f, +1.0f}, {0, 0, 0, 1} }, // 7
+};
+
+// 36 indices for the 12 triangles (2 per face)
+UINT indices[] =
+{
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+
+    // Back face
+    4, 6, 5,
+    4, 7, 6,
+
+    // Left face
+    4, 5, 1,
+    4, 1, 0,
+
+    // Right face
+    3, 2, 6,
+    3, 6, 7,
+
+    // Top face
+    1, 5, 6,
+    1, 6, 2,
+
+    // Bottom face
+    4, 0, 3,
+    4, 3, 7,
+};
+
+
+
 
 bool Renderer::Init(Window* window)
 {
     // Rendering pipeline
 
-    device.Init();
-    context.Init(device.GetContext());
-    swap_chain.Init(window, device.Get());
+    m_device.Init();
+    m_context.Init(m_device.GetContext());
+    m_swap_chain.Init(window, m_device.Get());
 
-    frame_buffer.CreateRenderTarget(device.Get(), swap_chain.GetSwapChain());
-    frame_buffer.CreateDepthStencil(window, device.Get(), swap_chain.GetSwapChain());
+    m_frame_buffer.CreateRenderTarget(m_device.Get(), m_swap_chain.GetSwapChain());
+    m_frame_buffer.CreateDepthStencil(window, m_device.Get(), m_swap_chain.GetSwapChain());
 
-    shader_manager.Init(device.Get());
-    shader_manager.LoadVertexShader(L"VertexShader.hlsl");
-    shader_manager.LoadPixelShader(L"PixelShader.hlsl");
+    m_shader_manager.Init(m_device.Get());
+    m_shader_manager.LoadVertexShader(L"VertexShader.hlsl");
+    m_shader_manager.LoadPixelShader(L"PixelShader.hlsl");
 
-    viewport_manager.Init(window);
+    m_viewport_manager.Init(window);
 
     // Data Loader
 
-    vertex_buffer.Init(device.Get());
+    m_vertex_buffer.Init(m_device.Get());
+    m_index_buffer.Init(m_device.Get());
+    
+    m_vertex_buffer.Load(vertices, sizeof(Vertex), ARRAYSIZE(vertices),
+        m_shader_manager.GetVertexShaderBlob()->GetBufferPointer(),
+        m_shader_manager.GetVertexShaderBlob()->GetBufferSize()
+    );
+
+    m_index_buffer.Load(indices, ARRAYSIZE(indices));
+
+    // Set Matrix
+
+    m_matrix_buffer.Init(m_device.Get());
+
+    // Set Matrix
+
+    // World
+
+    XMMATRIX rotation = XMMatrixRotationY(XMConvertToRadians(0.0f));
+    XMMATRIX scale = XMMatrixScaling(0.5f, 0.5f, 0.5f);
+    XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
+
+    XMMATRIX world = scale * rotation * translation;
+
+    // View
+
+    XMVECTOR eye = XMVectorSet(1.0f, 1.0f, -3.0f, 1.0f);
+    XMVECTOR at = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
+    XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+    XMMATRIX view = XMMatrixLookAtLH(eye, at, up);
+
+    // Projection
+
+    constexpr float fov = XMConvertToRadians(45.0f);
+    float aspect_ratio = (float)window->GetWidth() / (float)window->GetHeight();
+    float near_z = 0.1f, far_z = 100.0f;
+    XMMATRIX proj = XMMatrixPerspectiveFovLH(fov, aspect_ratio, near_z, far_z);
+
+    m_matrix_buffer.SetMatrixData(m_context.Get(), world, view, proj);
 
     return true;
 }
 
 void Renderer::BeginFrame()
 {
-    context.Get()->OMSetRenderTargets(1, frame_buffer.GetRTVAddress(), frame_buffer.GetDSV());
+    float color[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
-    float color[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-    context.Get()->ClearRenderTargetView(frame_buffer.GetRTV(), color);
-    context.Get()->ClearDepthStencilView(frame_buffer.GetDSV(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+    m_context.Get()->OMSetRenderTargets(1, m_frame_buffer.GetRTVAddress(), m_frame_buffer.GetDSV());
+    m_context.Get()->ClearRenderTargetView(m_frame_buffer.GetRTV(), color);
+    m_context.Get()->ClearDepthStencilView(m_frame_buffer.GetDSV(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void Renderer::SetupPipeline()
 {
-    context.Get()->IASetInputLayout(vertex_buffer.GetInputLayout());
-    context.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    context.Get()->VSSetShader(shader_manager.GetVertexShader(), nullptr, 0);
-    context.Get()->RSSetViewports(1, &viewport_manager.GetViewport());
-    context.Get()->PSSetShader(shader_manager.GetPixelShader(), nullptr, 0);
+    m_context.Get()->IASetInputLayout(m_vertex_buffer.GetInputLayout());
+    m_context.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    m_context.Get()->VSSetShader(m_shader_manager.GetVertexShader(), nullptr, 0);
+    m_context.Get()->VSSetConstantBuffers(0, 1, m_matrix_buffer.GetMatrixBufferAddress());
+    m_context.Get()->RSSetViewports(1, &m_viewport_manager.GetViewport());
+    m_context.Get()->PSSetShader(m_shader_manager.GetPixelShader(), nullptr, 0);
 }
 
 void Renderer::DrawScene()
 {
-    Vertex triangle[] = {
-        { DirectX::XMFLOAT3(0.0f,  0.5f, 0.0f) },
-        { DirectX::XMFLOAT3(0.5f, -0.5f, 0.0f) },
-        { DirectX::XMFLOAT3(-0.5f, -0.5f, 0.0f) }
-    };
-
-    vertex_buffer.Load(triangle, sizeof(Vertex), ARRAYSIZE(triangle),
-        shader_manager.GetVertexShaderBlob()->GetBufferPointer(),
-        shader_manager.GetVertexShaderBlob()->GetBufferSize()
-    );
-
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
 
-    context.Get()->IASetVertexBuffers(0, 1, vertex_buffer.GetVertexBufferAddress(), &stride, &offset);
-    context.Get()->Draw(3, 0);
+    m_context.Get()->IASetVertexBuffers(0, 1, m_vertex_buffer.GetVertexBufferAddress(), &stride, &offset);
+    m_context.Get()->IASetIndexBuffer(m_index_buffer.GetIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
+    m_context.Get()->DrawIndexed(36, 0, 0);
 }
 
 void Renderer::EndFrame()
 {
-    swap_chain.Present();
+    m_swap_chain.Present();
 }
 
 void Renderer::Render()

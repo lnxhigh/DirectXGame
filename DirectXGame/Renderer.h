@@ -8,6 +8,8 @@
 #include "ViewportManager.h"
 
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "MatrixBuffer.h"
 
 #include <d3d11.h>
 #include <dxgi.h>
@@ -21,13 +23,16 @@ using Microsoft::WRL::ComPtr;
 class Renderer
 {
 private:
-    Device device;
-    Context context;
-    SwapChain swap_chain;
-    FrameBuffer frame_buffer;
-    ShaderManager shader_manager;
-    ViewportManager viewport_manager;
-    VertexBuffer vertex_buffer;
+    Device m_device;
+    Context m_context;
+    SwapChain m_swap_chain;
+    FrameBuffer m_frame_buffer;
+    ShaderManager m_shader_manager;
+    ViewportManager m_viewport_manager;
+
+    VertexBuffer m_vertex_buffer;
+    IndexBuffer m_index_buffer;
+    MatrixBuffer m_matrix_buffer;
 
 public:
     bool Init(Window* window);
