@@ -2,7 +2,9 @@
 
 #include "Window.h"
 #include "Renderer.h"
+#include "InputSystem.h"
 #include "Timer.h"
+#include "Camera.h"
 
 class App
 {
@@ -16,5 +18,7 @@ public:
 private:
     Window m_window;
     Renderer m_renderer;
+    InputSystem m_input_system;
     Timer m_timer;
+    Camera m_camera;
 };

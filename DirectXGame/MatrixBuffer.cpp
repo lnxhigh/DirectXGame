@@ -23,7 +23,7 @@ bool MatrixBuffer::Init(ID3D11Device* device)
 
 void MatrixBuffer::SetMatrixData(
     ID3D11DeviceContext* context,
-    const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& projection)
+    const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj)
 {
     D3D11_MAPPED_SUBRESOURCE resource;
 
@@ -32,7 +32,7 @@ void MatrixBuffer::SetMatrixData(
         MatrixBufferType* ptr = reinterpret_cast<MatrixBufferType*>(resource.pData);
         ptr->world = XMMatrixTranspose(world);
         ptr->view = XMMatrixTranspose(view);
-        ptr->projection = XMMatrixTranspose(projection);
+        ptr->proj = XMMatrixTranspose(proj);
         context->Unmap(m_buffer.Get(), 0);
     }
 }

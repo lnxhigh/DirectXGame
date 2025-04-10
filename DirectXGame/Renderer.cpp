@@ -45,8 +45,7 @@ UINT indices[] =
     4, 3, 7,
 };
 
-
-
+XMMATRIX world, view, proj;
 
 bool Renderer::Init(Window* window)
 {
@@ -81,31 +80,26 @@ bool Renderer::Init(Window* window)
 
     m_matrix_buffer.Init(m_device.Get());
 
-    // Set Matrix
-
     // World
 
     XMMATRIX rotation = XMMatrixRotationY(XMConvertToRadians(0.0f));
     XMMATRIX scale = XMMatrixScaling(0.5f, 0.5f, 0.5f);
     XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
-
-    XMMATRIX world = scale * rotation * translation;
+    world = scale * rotation * translation;
 
     // View
 
     XMVECTOR eye = XMVectorSet(1.0f, 1.0f, -3.0f, 1.0f);
     XMVECTOR at = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
     XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-    XMMATRIX view = XMMatrixLookAtLH(eye, at, up);
+    view = XMMatrixLookAtLH(eye, at, up);
 
     // Projection
 
     constexpr float fov = XMConvertToRadians(45.0f);
     float aspect_ratio = (float)window->GetWidth() / (float)window->GetHeight();
     float near_z = 0.1f, far_z = 100.0f;
-    XMMATRIX proj = XMMatrixPerspectiveFovLH(fov, aspect_ratio, near_z, far_z);
-
-    m_matrix_buffer.SetMatrixData(m_context.Get(), world, view, proj);
+    proj = XMMatrixPerspectiveFovLH(fov, aspect_ratio, near_z, far_z);
 
     return true;
 }
@@ -144,8 +138,10 @@ void Renderer::EndFrame()
     m_swap_chain.Present();
 }
 
-void Renderer::Render()
+void Renderer::Render(XMMATRIX new_view)
 {
+    m_matrix_buffer.SetMatrixData(m_context.Get(), world, new_view, proj);
+
     BeginFrame();
     SetupPipeline();
     DrawScene();

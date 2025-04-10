@@ -1,7 +1,13 @@
 #include "Window.h"
+#include "InputSystem.h"
+#include <windowsx.h>
 
-bool Window::Init(HINSTANCE h_instance, int cmd_show)
-{    
+bool Window::Init(HINSTANCE h_instance, int cmd_show, InputSystem* input_system)
+{   
+    // Set the input system before creating a window
+
+    m_input_system = input_system;
+
     // Register window class
 
     WNDCLASS wc = { };
@@ -85,14 +91,56 @@ LRESULT Window::WindowProc(HWND hwnd, UINT u_msg, WPARAM w_param, LPARAM l_param
 {
     switch (u_msg)
     {
+
     case WM_DESTROY:
+    {
         PostQuitMessage(0);
-        break;
+
+        return 0;
+    }
+
+    case WM_CREATE:
+    {
+        m_input_system->Init(hwnd);
+
+        return 0;
+    }
+
+    case WM_INPUT:
+    {
+        UINT dw_size = 0;
+        if (GetRawInputData((HRAWINPUT)l_param, RID_INPUT, nullptr, &dw_size, sizeof(RAWINPUTHEADER)) != 0)
+            return 0;
+
+        if (m_input_buffer.size() < dw_size)
+            m_input_buffer.resize(dw_size);
+
+        if (GetRawInputData((HRAWINPUT)l_param, RID_INPUT, m_input_buffer.data(), &dw_size, sizeof(RAWINPUTHEADER)) != dw_size)
+            return 0;
+
+        RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(m_input_buffer.data());
+        m_input_system->Update(raw);
+
+        return 0;
+    }
 
     case WM_SIZE:
-        m_width = LOWORD(l_param);
-        m_height = HIWORD(l_param);
-        break;
+    {
+        int width = LOWORD(l_param);
+        int height = HIWORD(l_param);
+
+        // Update window size
+
+        m_width = width;
+        m_height = height;
+
+        // Notify event
+
+        // ... OnResize(width, height);
+
+        return 0;
+    }
+        
     }
 
     return DefWindowProc(hwnd, u_msg, w_param, l_param);

@@ -14,7 +14,7 @@ private:
     {
         XMMATRIX world;
         XMMATRIX view;
-        XMMATRIX projection;
+        XMMATRIX proj;
     };
 
     ComPtr<ID3D11Buffer> m_buffer;
@@ -24,7 +24,7 @@ public:
 
     void SetMatrixData(
         ID3D11DeviceContext* context,
-        const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& projection
+        const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj
     );
 
     ID3D11Buffer* GetMatrixBuffer() const { return m_buffer.Get(); }

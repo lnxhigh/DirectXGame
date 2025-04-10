@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>User32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,20 +121,25 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>User32.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixBuffer.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SwapChain.cpp" />
@@ -145,11 +150,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="IInputDevice.h" />
+    <ClInclude Include="InputListener.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MatrixBuffer.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderManager.h" />
@@ -167,6 +178,8 @@
     <FxCompile Include="PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <None Include="ShaderCommon.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -175,6 +188,8 @@
     <FxCompile Include="VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

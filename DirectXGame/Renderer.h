@@ -36,7 +36,7 @@ private:
 
 public:
     bool Init(Window* window);
-    void Render();
+    void Render(XMMATRIX new_view);
 
 private:
     void BeginFrame(); // Clear and set render target

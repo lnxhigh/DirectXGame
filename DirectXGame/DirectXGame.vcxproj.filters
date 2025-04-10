@@ -4,25 +4,34 @@
     <Filter Include="App">
       <UniqueIdentifier>{418dd7ca-dd74-4ed5-9ef5-ff6aa713e3fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{09a231f3-bc81-45bf-a1d4-de95eda833b9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utility">
       <UniqueIdentifier>{b930f7c0-e674-4fe7-8e25-8497fb371850}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Buffer">
+    <Filter Include="GraphicsEngine">
+      <UniqueIdentifier>{09a231f3-bc81-45bf-a1d4-de95eda833b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsEngine\Buffer">
       <UniqueIdentifier>{1947c189-a835-4f5c-a9da-366d985d148f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Shader">
+    <Filter Include="GraphicsEngine\Shader">
       <UniqueIdentifier>{2c790de8-1974-4e07-b8c8-168b44943a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsEngine\Interface">
+      <UniqueIdentifier>{3bd82357-7e85-499b-a157-b806998c11b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsEngine\Viewport">
+      <UniqueIdentifier>{7a3fb762-47d8-4b32-8f44-cabff548a43c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputSystem">
+      <UniqueIdentifier>{5d6ca763-1516-41c7-8303-7c983c1cea85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{432370c3-fc31-45a5-a23f-25d67b708a62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>App</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Utility</Filter>
@@ -31,38 +40,52 @@
       <Filter>App</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>GraphicsEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Device.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="SwapChain.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewportManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Context.cpp" />
     <ClCompile Include="VertexBuffer.cpp">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="ShaderManager.cpp">
-      <Filter>Engine\Shader</Filter>
+      <Filter>GraphicsEngine\Shader</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="MatrixBuffer.cpp">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapChain.cpp">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewportManager.cpp">
+      <Filter>GraphicsEngine\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Utility</Filter>
     </ClInclude>
@@ -70,36 +93,59 @@
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Engine</Filter>
+      <Filter>GraphicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Vertex.h">
-      <Filter>Engine</Filter>
+      <Filter>GraphicsEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Device.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="SwapChain.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewportManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Context.h" />
     <ClInclude Include="VertexBuffer.h">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="ShaderManager.h">
-      <Filter>Engine\Shader</Filter>
+      <Filter>GraphicsEngine\Shader</Filter>
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="MatrixBuffer.h">
-      <Filter>Engine\Buffer</Filter>
+      <Filter>GraphicsEngine\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SwapChain.h">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>GraphicsEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewportManager.h">
+      <Filter>GraphicsEngine\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="InputListener.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="IInputDevice.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,15 +153,15 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
-      <Filter>Engine\Shader</Filter>
+      <Filter>GraphicsEngine\Shader</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>Engine\Shader</Filter>
+      <Filter>GraphicsEngine\Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ShaderCommon.hlsl">
-      <Filter>Engine\Shader</Filter>
+      <Filter>GraphicsEngine\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>
