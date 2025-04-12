@@ -17,10 +17,6 @@ Camera::Camera()
 
 	m_forward = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f); // w = 0
 	m_right = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f); // w = 0
-
-	// Set initial view matrix
-
-	m_view = XMMatrixLookAtLH(m_eye, m_at, m_up);
 }
 
 Camera::~Camera()
@@ -99,18 +95,22 @@ void Camera::OnMouseMove(int dx, int dy)
 	m_at = m_eye + m_forward;
 }
 
-void Camera::SetCameraTransform(XMVECTOR eye, XMVECTOR at, XMVECTOR up)
+void Camera::SetTransform(XMVECTOR eye, XMVECTOR at, XMVECTOR up)
 {
 	m_eye = eye;
 	m_at = at;
 	m_up = up;
+}
 
-	m_view = XMMatrixLookAtLH(m_eye, m_at, m_up);
+void Camera::SetPerspective(float fov, float aspect, float near_z, float far_z)
+{
+	m_fov = fov;
+	m_aspect = aspect;
+	m_near = near_z;
+	m_far = far_z;
 }
 
 void Camera::Update(float dt)
 {
 	Move(dt);
-
-	m_view = XMMatrixLookAtLH(m_eye, m_at, m_up);
 }

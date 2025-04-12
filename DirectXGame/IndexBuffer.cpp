@@ -1,13 +1,6 @@
 #include "IndexBuffer.h"
 
-bool IndexBuffer::Init(ID3D11Device* device)
-{
-    m_device = device;
-
-    return true;
-}
-
-bool IndexBuffer::Load(void* indices, UINT size_list)
+bool IndexBuffer::Create(ID3D11Device* device, void* indices, UINT size_list)
 {
     D3D11_BUFFER_DESC desc = {};
     desc.Usage = D3D11_USAGE_DEFAULT;
@@ -18,7 +11,7 @@ bool IndexBuffer::Load(void* indices, UINT size_list)
     init_data.pSysMem = indices;
 
     ComPtr<ID3D11Buffer> buffer = nullptr;
-    HRESULT hr_buffer = m_device->CreateBuffer(&desc, &init_data, buffer.GetAddressOf());
+    HRESULT hr_buffer = device->CreateBuffer(&desc, &init_data, buffer.GetAddressOf());
 
     if (FAILED(hr_buffer))
     {
@@ -26,7 +19,8 @@ bool IndexBuffer::Load(void* indices, UINT size_list)
         return false;
     }
 
-    m_index_buffer = buffer;
+    m_buffer = buffer;
+    m_index_count = size_list;
 
     return true;
 }

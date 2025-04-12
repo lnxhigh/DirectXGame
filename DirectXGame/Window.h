@@ -32,4 +32,5 @@ public:
     HWND GetHwnd() const { return m_hwnd; }
     int GetWidth() const { return m_width; }
     int GetHeight() const { return m_height; }
+    float GetAspectRatio() const { return (float) m_width / (float) m_height; }
 };

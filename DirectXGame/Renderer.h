@@ -1,20 +1,22 @@
 #pragma once
 
-#include "Device.h"
-#include "Context.h"
-#include "SwapChain.h"
-#include "FrameBuffer.h"
-#include "ShaderManager.h"
-#include "ViewportManager.h"
-
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "MatrixBuffer.h"
+#include <memory>
+#include <vector>
 
 #include <d3d11.h>
 #include <dxgi.h>
 #include <d3dcompiler.h>
 #include <wrl/client.h>
+
+#include "Device.h"
+#include "Context.h"
+#include "SwapChain.h"
+#include "FrameBuffer.h"
+#include "MatrixBuffer.h"
+#include "Viewport.h"
+
+#include "Entity.h"
+#include "Camera.h"
 
 class Window;
 
@@ -26,22 +28,21 @@ private:
     Device m_device;
     Context m_context;
     SwapChain m_swap_chain;
+    Viewport m_viewport;
     FrameBuffer m_frame_buffer;
-    ShaderManager m_shader_manager;
-    ViewportManager m_viewport_manager;
-
-    VertexBuffer m_vertex_buffer;
-    IndexBuffer m_index_buffer;
     MatrixBuffer m_matrix_buffer;
 
 public:
     bool Init(Window* window);
-    void Render(XMMATRIX new_view);
+    void Render(std::vector<std::unique_ptr<Entity>>& entities, const Camera& camera);
 
 private:
     void BeginFrame(); // Clear and set render target
-    void SetupPipeline(); // Viewport, Shader, InputLayout
-    void DrawScene(); // Draw 
+    void SetupPipeline(const Camera& camera); // Viewport, Camera
+    void DrawScene(const std::vector<std::unique_ptr<Entity>>& entities); // Transform, Material, Mesh
     void EndFrame(); // Present
+
+public:
+    Device& GetDevice() { return m_device; }
 
 };

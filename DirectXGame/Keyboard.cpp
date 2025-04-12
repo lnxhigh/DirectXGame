@@ -8,7 +8,7 @@ bool Keyboard::Init(HWND hwnd)
     device.dwFlags = 0; // Receive input when focused
     device.hwndTarget = hwnd;
 
-    if (!RegisterRawInputDevices(&device, 1, sizeof(device)))
+    if (!RegisterRawInputDevices(&device, 1, sizeof(RAWINPUTDEVICE)))
     {
         OutputDebugStringA("Error: Failed to register keyboard\n");
         return false;
