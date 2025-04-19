@@ -95,11 +95,11 @@ void Camera::OnMouseMove(int dx, int dy)
 	m_at = m_eye + m_forward;
 }
 
-void Camera::SetTransform(XMVECTOR eye, XMVECTOR at, XMVECTOR up)
+void Camera::SetTransform(XMFLOAT4 eye, XMFLOAT4 at, XMFLOAT4 up)
 {
-	m_eye = eye;
-	m_at = at;
-	m_up = up;
+	m_eye = XMLoadFloat4(&eye);
+	m_at = XMLoadFloat4(&at);
+	m_up = XMLoadFloat4(&up);
 }
 
 void Camera::SetPerspective(float fov, float aspect, float near_z, float far_z)

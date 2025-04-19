@@ -1,8 +1,11 @@
 #pragma once
 #include <DirectXMath.h>
 
+using namespace DirectX;
+
 struct Vertex
 {
-    DirectX::XMFLOAT3 position;
-    DirectX::XMFLOAT4 color;
+    XMFLOAT3 position;
+    XMFLOAT3 normal;
+    XMFLOAT4 color;
 };

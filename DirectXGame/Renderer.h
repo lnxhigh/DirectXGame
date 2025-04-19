@@ -12,8 +12,10 @@
 #include "Context.h"
 #include "SwapChain.h"
 #include "FrameBuffer.h"
-#include "MatrixBuffer.h"
 #include "Viewport.h"
+
+#include "MatrixBuffer.h"
+#include "LightBuffer.h"
 
 #include "Entity.h"
 #include "Camera.h"
@@ -28,9 +30,12 @@ private:
     Device m_device;
     Context m_context;
     SwapChain m_swap_chain;
-    Viewport m_viewport;
     FrameBuffer m_frame_buffer;
+
+    Viewport m_viewport;
     MatrixBuffer m_matrix_buffer;
+    LightBuffer m_light_buffer;
+
 
 public:
     bool Init(Window* window);
@@ -44,5 +49,6 @@ private:
 
 public:
     Device& GetDevice() { return m_device; }
+    Context& GetContext() { return m_context; }
 
 };

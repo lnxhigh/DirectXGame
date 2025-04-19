@@ -7,12 +7,21 @@
 #include "Renderer.h"
 #include "InputSystem.h"
 #include "Timer.h"
+
 #include "Camera.h"
+#include "Light.h"
 
 #include "Entity.h"
 #include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "MaterialComponent.h"
+
+#include "LightBuffer.h"
+#include "MaterialBuffer.h"
+#include "CameraBuffer.h"
+
+#include "Cube.h"
+#include "Icosahedron.h"
 
 class App
 {
@@ -22,8 +31,8 @@ public:
 
     bool Init();
     
-    void LoadResources();
-    void LoadScene();
+    void LoadResources(ID3D11Device* device);
+    void LoadScene(ID3D11Device* device, ID3D11DeviceContext* context);
 
     int Run();
 
@@ -32,9 +41,18 @@ private:
     Renderer m_renderer;
     InputSystem m_input_system;
     Timer m_timer;
+    
+    Light m_light;
     Camera m_camera;
 
+    LightBuffer m_light_buffer;
+    MaterialBuffer m_material_buffer;
+    CameraBuffer m_camera_buffer;
+
     Mesh m_mesh;
+    Cube m_cube;
+    Icosahedron m_sphere;
+
     Material m_material;
     std::vector<std::unique_ptr<Entity>> m_entities;
 };

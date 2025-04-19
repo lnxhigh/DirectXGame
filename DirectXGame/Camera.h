@@ -49,9 +49,10 @@ public:
     void Move(float dt);
     void OnMouseMove(int dx, int dy);
     
-    void SetTransform(XMVECTOR eye, XMVECTOR at, XMVECTOR up);
+    void SetTransform(XMFLOAT4 eye, XMFLOAT4 at, XMFLOAT4 up);
     void SetPerspective(float fov, float aspect, float near_z, float far_z);
 
+    XMVECTOR GetPosition() const { return m_eye; }
     XMMATRIX GetViewMatrix() const { return XMMatrixLookAtLH(m_eye, m_at, m_up); }
     XMMATRIX GetProjectionMatrix() const { return XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far); }
 

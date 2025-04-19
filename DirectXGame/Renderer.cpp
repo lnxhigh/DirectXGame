@@ -6,6 +6,8 @@
 #include "MeshComponent.h"
 #include "MaterialComponent.h"
 
+#include "ShaderStage.h"
+
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
@@ -49,12 +51,13 @@ void Renderer::SetupPipeline(const Camera& camera)
     XMMATRIX view = camera.GetViewMatrix();
     XMMATRIX proj = camera.GetProjectionMatrix();
 
-    m_matrix_buffer.SetViewMatrix(view);
-    m_matrix_buffer.SetProjectionMatrix(proj);
+    auto& matrix_data = m_matrix_buffer.Data();
+    XMStoreFloat4x4(&matrix_data.view, XMMatrixTranspose(view));
+    XMStoreFloat4x4(&matrix_data.proj, XMMatrixTranspose(proj));
 
     // Viewport
 
-    m_context.Bind(m_viewport);
+    m_viewport.Bind(m_context.Get());
 }
 
 void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
@@ -68,8 +71,14 @@ void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
         if (auto* transform = entity->GetComponent<TransformComponent>())
         {
             XMMATRIX world = transform->GetWorldMatrix();
-            m_matrix_buffer.SetWorldMatrix(world);
-            m_context.Bind(m_matrix_buffer);
+            auto& matrix_data = m_matrix_buffer.Data();
+            XMStoreFloat4x4(&matrix_data.world, XMMatrixTranspose(world));
+
+            XMMATRIX world_inv_transpose = XMMatrixTranspose(XMMatrixInverse(nullptr, world));
+            XMStoreFloat4x4(&matrix_data.world_inv_transpose, XMMatrixTranspose(world_inv_transpose));
+
+            m_matrix_buffer.Update(m_context.Get());
+            m_matrix_buffer.Bind(m_context.Get(), ShaderStage::Vertex, 0);
         }
 
         // Material
@@ -78,7 +87,7 @@ void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
         {
             if (Material* material = material_component->GetMaterial())
             {
-                m_context.Bind(*material);
+                material->Bind(m_context.Get());
             }
         }
 
@@ -88,7 +97,7 @@ void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
         {
             if (Mesh* mesh = mesh_component->GetMesh())
             {
-                m_context.Bind(*mesh);
+                mesh->Bind(m_context.Get());
                 m_context.Get()->DrawIndexed(mesh->GetIndexBuffer().GetIndexCount(), 0, 0);
             }
         }

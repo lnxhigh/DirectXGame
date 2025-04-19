@@ -37,6 +37,9 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{604a66b6-165a-4a78-b549-70146cbd2926}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{2f9095b7-573c-42a3-9a37-0f8a1b2824a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -58,9 +61,6 @@
       <Filter>GraphicsEngine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
-      <Filter>GraphicsEngine\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="MatrixBuffer.cpp">
       <Filter>GraphicsEngine\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="SwapChain.cpp">
@@ -87,9 +87,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -102,17 +99,14 @@
     <ClCompile Include="PixelShader.cpp">
       <Filter>GraphicsEngine\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
     <ClCompile Include="MaterialComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>GraphicsEngine\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryUtil.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +197,33 @@
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>GraphicsEngine\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderStage.h">
+      <Filter>GraphicsEngine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="LightBuffer.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBuffer.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>GraphicsEngine\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialBuffer.h">
+      <Filter>GraphicsEngine\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryUtil.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Icosahedron.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

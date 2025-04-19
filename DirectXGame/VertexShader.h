@@ -18,4 +18,3 @@ public:
 	ID3D11VertexShader* Get() const { return m_vertex_shader.Get(); }
 	ID3DBlob* GetShaderBlob() const { return m_vs_blob.Get(); }
 };
-
