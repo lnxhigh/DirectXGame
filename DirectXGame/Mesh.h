@@ -11,15 +11,13 @@ private:
 	IndexBuffer m_index_buffer;
 
 public:
-	void Bind(ID3D11DeviceContext* context)
-	{
-		UINT stride = m_vertex_buffer.GetStride();
-		UINT offset = m_vertex_buffer.GetOffset();
+	bool Init(
+		ID3D11Device* device,
+		void* vertices, UINT size_vertex, UINT size_vertices_list,
+		void* indices, UINT size_indices_list
+	);
 
-		context->IASetVertexBuffers(0, 1, m_vertex_buffer.GetAddressOf(), &stride, &offset);
-		context->IASetIndexBuffer(m_index_buffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	}
+	void Bind(ID3D11DeviceContext* context);
 
 public:
 	VertexBuffer& GetVertexBuffer() { return m_vertex_buffer; }

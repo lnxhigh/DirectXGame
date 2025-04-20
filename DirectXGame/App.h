@@ -31,8 +31,8 @@ public:
 
     bool Init();
     
-    void LoadResources(ID3D11Device* device);
-    void LoadScene(ID3D11Device* device, ID3D11DeviceContext* context);
+    void LoadResources(ID3D11Device* device, ID3D11DeviceContext* context);
+    void LoadScene(ID3D11DeviceContext* context);
 
     int Run();
 
@@ -45,13 +45,9 @@ private:
     Light m_light;
     Camera m_camera;
 
-    LightBuffer m_light_buffer;
-    MaterialBuffer m_material_buffer;
-    CameraBuffer m_camera_buffer;
-
     Mesh m_mesh;
     Cube m_cube;
-    Icosahedron m_sphere;
+    Icosahedron m_icosahedron;
 
     Material m_material;
     std::vector<std::unique_ptr<Entity>> m_entities;

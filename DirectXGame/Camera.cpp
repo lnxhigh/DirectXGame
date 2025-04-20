@@ -1,8 +1,9 @@
 #include "Camera.h"
-#include "InputSystem.h"
-#include "DirectXMath.h"
 
-#include "windows.h"
+#include <windows.h>
+#include <DirectXMath.h>
+
+#include "InputSystem.h"
 
 using namespace DirectX;
 
@@ -24,8 +25,15 @@ Camera::~Camera()
 
 }
 
-bool Camera::Init(InputSystem* input_system)
+bool Camera::Init(ID3D11Device* device, InputSystem* input_system)
 {
+	// Camera Buffer
+
+	if (!m_camera_buffer.Create(device))
+		return false;
+
+	// Input System
+
 	m_input_system = input_system;
 	input_system->RegisterListener(this);
 
@@ -100,6 +108,12 @@ void Camera::SetTransform(XMFLOAT4 eye, XMFLOAT4 at, XMFLOAT4 up)
 	m_eye = XMLoadFloat4(&eye);
 	m_at = XMLoadFloat4(&at);
 	m_up = XMLoadFloat4(&up);
+
+	m_forward = m_at - m_eye;
+	m_right = XMVector3Normalize(XMVector3Cross(m_up, m_forward));
+
+	m_pitch = asinf(XMVectorGetY(m_forward));
+	m_yaw = atan2f(XMVectorGetX(m_forward), XMVectorGetZ(m_forward));
 }
 
 void Camera::SetPerspective(float fov, float aspect, float near_z, float far_z)
@@ -113,4 +127,16 @@ void Camera::SetPerspective(float fov, float aspect, float near_z, float far_z)
 void Camera::Update(float dt)
 {
 	Move(dt);
+}
+
+void Camera::Update(ID3D11DeviceContext* context)
+{
+	auto& camera_data = m_camera_buffer.Data();
+	XMStoreFloat3(&camera_data.position, m_eye);
+	m_camera_buffer.Update(context);
+}
+
+void Camera::Bind(ID3D11DeviceContext* context) 
+{
+	m_camera_buffer.Bind(context, ShaderStage::Pixel, 3); // b3 in pixel shader
 }

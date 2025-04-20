@@ -6,8 +6,6 @@
 #include "MeshComponent.h"
 #include "MaterialComponent.h"
 
-#include "ShaderStage.h"
-
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
@@ -24,7 +22,7 @@ bool Renderer::Init(Window* window)
     m_frame_buffer.CreateRenderTarget(m_device.Get(), m_swap_chain.GetSwapChain());
     m_frame_buffer.CreateDepthStencil(window, m_device.Get(), m_swap_chain.GetSwapChain());
 
-    // Matrix buffer
+    // Buffer
 
     m_matrix_buffer.Create(m_device.Get());
 
@@ -44,7 +42,7 @@ void Renderer::BeginFrame()
     m_context.Get()->ClearDepthStencilView(m_frame_buffer.GetDSV(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-void Renderer::SetupPipeline(const Camera& camera)
+void Renderer::SetupPipeline(Light& light, Camera& camera)
 {
     // Matrix buffer
 
@@ -54,6 +52,14 @@ void Renderer::SetupPipeline(const Camera& camera)
     auto& matrix_data = m_matrix_buffer.Data();
     XMStoreFloat4x4(&matrix_data.view, XMMatrixTranspose(view));
     XMStoreFloat4x4(&matrix_data.proj, XMMatrixTranspose(proj));
+
+    // Light 
+
+    light.Bind(m_context.Get());
+
+    // Camera
+
+    camera.Bind(m_context.Get());
 
     // Viewport
 
@@ -111,10 +117,10 @@ void Renderer::EndFrame()
     m_swap_chain.Present();
 }
 
-void Renderer::Render(std::vector<std::unique_ptr<Entity>>& entities, const Camera& camera)
+void Renderer::Render(const std::vector<std::unique_ptr<Entity>>& entities, Light& light, Camera& camera)
 {
     BeginFrame();
-    SetupPipeline(camera);
+    SetupPipeline(light, camera);
     DrawScene(entities);
     EndFrame();
 }

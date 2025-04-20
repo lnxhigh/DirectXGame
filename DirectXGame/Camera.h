@@ -1,7 +1,9 @@
 #pragma once
+#include <d3d11.h>
+#include <DirectXMath.h>
 
 #include "InputListener.h"
-#include "DirectXMath.h"
+#include "CameraBuffer.h"
 
 class InputSystem;
 
@@ -10,6 +12,10 @@ using namespace DirectX;
 class Camera : public InputListener
 {
 private:
+    // Buffer
+
+    CameraBuffer m_camera_buffer;
+
     // Input system
 
     InputSystem* m_input_system = nullptr;
@@ -45,16 +51,21 @@ public:
     ~Camera();
 
 public:
-    bool Init(InputSystem* input_system);
+    bool Init(ID3D11Device* device, InputSystem* input_system);
     void Move(float dt);
     void OnMouseMove(int dx, int dy);
     
     void SetTransform(XMFLOAT4 eye, XMFLOAT4 at, XMFLOAT4 up);
     void SetPerspective(float fov, float aspect, float near_z, float far_z);
 
-    XMVECTOR GetPosition() const { return m_eye; }
-    XMMATRIX GetViewMatrix() const { return XMMatrixLookAtLH(m_eye, m_at, m_up); }
-    XMMATRIX GetProjectionMatrix() const { return XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far); }
+    const XMVECTOR GetPosition() const { return m_eye; }
+    const XMMATRIX GetViewMatrix() const { return XMMatrixLookAtLH(m_eye, m_at, m_up); }
+    const XMMATRIX GetProjectionMatrix() const { return XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far); }
 
+public:
     void Update(float dt);
+
+public:
+    void Update(ID3D11DeviceContext* context);
+    void Bind(ID3D11DeviceContext* context);
 };
