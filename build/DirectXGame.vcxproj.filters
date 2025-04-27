@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\FrameBuffer.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Component\MeshComponent.cpp">
+      <Filter>Source Files\Scene\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Component\MaterialComponent.cpp">
+      <Filter>Source Files\Scene\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Core\App.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\ConstantBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\CameraBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\IndexBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\LightBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\MaterialBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\MatrixBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\SwapChain.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Renderer.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Viewport.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Camera.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Component\Component.cpp">
+      <Filter>Source Files\Scene\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Context.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DirectXGame\Source\Input\IInputDevice.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Input\InputSystem.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Input\Keyboard.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Input\Mouse.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Resource\Mesh.cpp">
+      <Filter>Source Files\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Resource\Material.cpp">
+      <Filter>Source Files\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Buffer\VertexBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Graphics\Device.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Shader\PixelShader.cpp">
+      <Filter>Source Files\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Shader\InputLayout.cpp">
+      <Filter>Source Files\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Shader\ShaderStage.cpp">
+      <Filter>Source Files\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Shader\VertexShader.cpp">
+      <Filter>Source Files\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Light.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Scene\Entity\Entity.cpp">
+      <Filter>Source Files\Scene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Core\Timer.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Source\Window\Window.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Input\Keyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Input\InputSystem.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Input\InputListener.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Input\IInputDevice.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Input\Mouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Camera.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Device.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Light.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Viewport.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\IndexBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\LightBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\FrameBuffer.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\MaterialBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\MatrixBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\ConstantBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\CameraBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Resource\Mesh.h">
+      <Filter>Header Files\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Resource\Material.h">
+      <Filter>Header Files\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Resource\Primitive\Icosahedron.h">
+      <Filter>Header Files\Resource\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Resource\Primitive\Cube.h">
+      <Filter>Header Files\Resource\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Context.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Renderer.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Vertex.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Component\Component.h">
+      <Filter>Header Files\Scene\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Component\TransformComponent.h">
+      <Filter>Header Files\Scene\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Component\MeshComponent.h">
+      <Filter>Header Files\Scene\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Component\MaterialComponent.h">
+      <Filter>Header Files\Scene\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Shader\VertexShader.h">
+      <Filter>Header Files\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Shader\PixelShader.h">
+      <Filter>Header Files\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Shader\InputLayout.h">
+      <Filter>Header Files\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Window\Window.h">
+      <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\SwapChain.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Buffer\VertexBuffer.h">
+      <Filter>Header Files\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Core\Timer.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Core\App.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Graphics\Shader\ShaderStage.h">
+      <Filter>Header Files\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Include\Scene\Entity\Entity.h">
+      <Filter>Header Files\Scene\Entity</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\User\source\repos\DirectXGame\CmakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\User\source\repos\DirectXGame\DirectXGame\Resource\DirectXGame.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{07D23FE1-F57A-35E1-8BAA-837B7B637A6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{8A22CD7B-C613-3434-B6C1-E30800D9098D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{255f14d2-5dfd-4b55-99c3-f8aa96a5a775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{04652700-956b-4436-8c2f-59b89d330834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resource">
+      <UniqueIdentifier>{f36fc629-e5da-4a15-a9d3-e2d97e93ef30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{29a5158a-e8ba-4d27-a555-411e21d56f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{42ff447d-6c22-47cc-878a-ef6842e35260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Buffer">
+      <UniqueIdentifier>{1eedb515-7be2-4f94-85ba-d4f62de7568d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resource\Primitive">
+      <UniqueIdentifier>{4423ef3c-9ba7-423c-a516-faeb76ea6af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Component">
+      <UniqueIdentifier>{6213132e-2228-4d05-9135-e98a048f2fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Shader">
+      <UniqueIdentifier>{6ee34741-1c82-4886-9b49-be84dfdf13b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Window">
+      <UniqueIdentifier>{0b346d1e-6c22-40e1-9ae2-687bdee0b143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{56fb9b3b-d3fe-4b7e-a56d-fc22332e7051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{6cbaa960-a900-4c22-95d9-c2991f7350d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{fc93ef51-7a23-40f5-ae7a-88fa4c090ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{9e447530-2914-403f-8e94-1755a256bc4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{e647d3fe-2cb3-4a27-8842-c4a9ecd17459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Buffer">
+      <UniqueIdentifier>{0c99c0fc-e9ed-4c39-81d8-3c3f9e799448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Component">
+      <UniqueIdentifier>{53753786-b2ac-4b4e-b72f-ea17e54c9250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Shader">
+      <UniqueIdentifier>{9564a335-c072-455b-ba54-d5e7d39d5b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource">
+      <UniqueIdentifier>{cdd0901f-33cf-45c3-91a1-bc1fe1db706d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Entity">
+      <UniqueIdentifier>{914ee468-8c60-456b-b173-daed3ff74782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Entity">
+      <UniqueIdentifier>{936d1ec0-dcb8-4164-aaac-6309a998bdc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{69238b04-79e7-40df-80a9-a3b29af0d235}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\DirectXGame\Resource\Shader\VertexShader.hlsl">
+      <Filter>Resource</Filter>
+    </FxCompile>
+    <FxCompile Include="..\DirectXGame\Resource\Shader\PixelShader.hlsl">
+      <Filter>Resource</Filter>
+    </FxCompile>
+    <FxCompile Include="..\DirectXGame\Resource\Shader\ShaderCommon.hlsl">
+      <Filter>Resource</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

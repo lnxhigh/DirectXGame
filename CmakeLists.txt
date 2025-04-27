@@ -1,0 +1,23 @@
+# Minimum required version of CMake
+cmake_minimum_required(VERSION 3.10)
+
+# Project name
+project(DirectXGame)
+
+# C++14
+set(CMAKE_CXX_STANDARD 14)
+
+# Add include directories
+include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include)
+
+# Find all header and source files
+file(GLOB_RECURSE HEADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include/*.h)
+file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cpp)
+
+# Create executable with project name
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+# Add resource file if building on Windows
+if(WIN32)
+    target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/DirectXGame.rc)
+endif()
