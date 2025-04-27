@@ -1,3 +1,0 @@
-C:/Users/User/source/repos/DirectXGame/build/CMakeFiles/DirectXGame.dir
-C:/Users/User/source/repos/DirectXGame/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/User/source/repos/DirectXGame/build/CMakeFiles/ZERO_CHECK.dir
