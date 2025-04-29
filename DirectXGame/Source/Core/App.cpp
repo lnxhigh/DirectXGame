@@ -75,8 +75,8 @@ void App::LoadResources(ID3D11Device* device, ID3D11DeviceContext* context)
 
     // Load material
 
-    const wchar_t* vs_path = L"../DirectXGame/Resource/Shader/VertexShader.hlsl";
-    const wchar_t* ps_path = L"../DirectXGame/Resource/Shader/PixelShader.hlsl";
+    const wchar_t* vs_path = L"../DirectXGame/Assets/Shader/Vertex/VertexShader.hlsl";
+    const wchar_t* ps_path = L"../DirectXGame/Assets/Shader/Pixel/PixelShader.hlsl";
 
     m_material.Init(device, vs_path, ps_path);
 

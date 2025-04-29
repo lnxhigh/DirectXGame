@@ -12,12 +12,56 @@ include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include)
 
 # Find all header and source files
 file(GLOB_RECURSE HEADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include/*.h)
+source_group(TREE "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include" PREFIX "Header Files" FILES ${HEADERS})
+
 file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cpp)
+source_group(TREE "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source" PREFIX "Source Files" FILES ${SOURCES})
 
 # Create executable with project name
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${HEADERS} ${SHADERS})
 
-# Add resource file if building on Windows
-if(WIN32)
-    target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/DirectXGame.rc)
-endif()
+# Link Direct3D 11 core libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE d3d11 dxgi d3dcompiler)
+
+# Add resource file on Windows
+target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/DirectXGame.rc)
+
+# Add shader file
+file(GLOB_RECURSE SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader/*.hlsl)
+target_sources(${PROJECT_NAME} PRIVATE ${SHADERS})
+source_group(TREE "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader" PREFIX "Shader Files" FILES ${SHADERS})
+
+## Vertex Shaders
+file(GLOB_RECURSE VERTEX_SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader/Vertex/*.hlsl)
+
+foreach(SHADER ${VERTEX_SHADERS})
+    set_source_files_properties(
+		${SHADER} 
+		PROPERTIES
+		LANGUAGE HLSL
+        SHADER_TYPE "vs"
+        SHADER_ENTRYPOINT "main"
+        SHADER_MODEL "5_0"
+    )
+endforeach()
+
+## Pixel Shaders
+file(GLOB_RECURSE PIXEL_SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader/Pixel/*.hlsl)
+
+foreach(SHADER ${PIXEL_SHADERS})
+    set_source_files_properties(
+		${SHADER} 
+		PROPERTIES
+		LANGUAGE HLSL
+        SHADER_TYPE "ps"
+        SHADER_ENTRYPOINT "main"
+        SHADER_MODEL "5_0"
+    )
+endforeach()
+
+## Common Shaders
+file(GLOB_RECURSE COMMON_SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader/Common/*.hlsl)
+
+foreach(SHADER ${COMMON_SHADERS})
+	set_property(SOURCE ${SHADER} PROPERTY VS_SETTINGS "ExcludedFromBuild=true")
+endforeach()

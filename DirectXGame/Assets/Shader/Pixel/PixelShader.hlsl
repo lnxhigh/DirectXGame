@@ -1,4 +1,4 @@
-#include "ShaderCommon.hlsl"
+#include "../Common/ShaderCommon.hlsl"
 
 float4 main(PixelIn input) : SV_TARGET 
 {

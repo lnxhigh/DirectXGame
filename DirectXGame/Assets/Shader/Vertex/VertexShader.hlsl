@@ -1,4 +1,4 @@
-#include "ShaderCommon.hlsl"
+#include "../Common/ShaderCommon.hlsl"
 
 VertexOut main(VertexIn input)
 {
