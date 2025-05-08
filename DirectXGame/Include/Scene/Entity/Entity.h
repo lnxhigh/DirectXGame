@@ -9,6 +9,7 @@ class Entity
 {
 private:
     // Entity owns its own components
+    
     std::unordered_map<std::type_index, std::unique_ptr<Component>> m_components;
 
 public:

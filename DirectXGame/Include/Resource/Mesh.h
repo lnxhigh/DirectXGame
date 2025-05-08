@@ -1,8 +1,16 @@
 #pragma once
+#include <string>
+
 #include <d3d11.h>
 
 #include "Graphics/Buffer/IndexBuffer.h"
 #include "Graphics/Buffer/VertexBuffer.h"
+#include "Resource/ResourceDescriptor.h"
+
+struct MeshDescriptor : public ResourceDescriptor
+{
+	std::string path;
+};
 
 class Mesh
 {

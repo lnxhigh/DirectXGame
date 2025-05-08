@@ -18,9 +18,12 @@
 #include "Scene/Component/TransformComponent.h"
 #include "Scene/Entity/Entity.h"
 #include "Scene/Light.h"
+#include "Scene/Scene.h"
 
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
+
+#include "Resource/ResourceManager.h"
 
 #include "Resource/Primitive/Cube.h"
 #include "Resource/Primitive/Icosahedron.h"
@@ -45,14 +48,10 @@ private:
     Renderer m_renderer;
     InputSystem m_input_system;
     Timer m_timer;
-    
-    Light m_light;
-    Camera m_camera;
+
+    Scene m_scene;
+    ResourceManager m_resource_manager;
 
     Mesh m_mesh;
-    Cube m_cube;
-    Icosahedron m_icosahedron;
-
     Material m_material;
-    std::vector<std::unique_ptr<Entity>> m_entities;
 };

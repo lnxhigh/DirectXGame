@@ -17,7 +17,7 @@ bool Window::Init(HINSTANCE h_instance, int cmd_show, InputSystem* input_system)
     wc.hInstance = h_instance;
     wc.lpszClassName = m_class_name;
 
-    if (!RegisterClassW(&wc))
+    if (!RegisterClass(&wc))
     {
         OutputDebugStringA("Error: Failed to register window class\n");
         return false;
@@ -25,7 +25,7 @@ bool Window::Init(HINSTANCE h_instance, int cmd_show, InputSystem* input_system)
     
     // Create window
 
-    HWND hwnd = CreateWindowExW(
+    HWND hwnd = CreateWindowEx(
         0,                              // Optional window styles.
         m_class_name,                   // Window class
         m_window_title,                 // Window text

@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # Project name
 project(DirectXGame)
 
-# C++14
-set(CMAKE_CXX_STANDARD 14)
+# C++17
+set(CMAKE_CXX_STANDARD 17)
 
 # Add include directories
 include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include)
@@ -23,8 +23,14 @@ add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${HEADERS} ${SHADERS})
 # Link Direct3D 11 core libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE d3d11 dxgi d3dcompiler)
 
+# Force Unicode character set
+target_compile_definitions(${PROJECT_NAME} PRIVATE UNICODE _UNICODE)
+
 # Add resource file on Windows
-target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/DirectXGame.rc)
+set(RESOURCE_RC ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/DirectXGame.rc)
+set(RESOURCE_HEADER ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Resource/resource.h)
+target_sources(${PROJECT_NAME} PRIVATE ${RESOURCE_RC} ${RESOURCE_HEADER})
+source_group("Resource Files" FILES ${RESOURCE_RC} ${RESOURCE_HEADER})
 
 # Add shader file
 file(GLOB_RECURSE SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shader/*.hlsl)

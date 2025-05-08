@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include <d3d11.h>
 #include <DirectXMath.h>
 
@@ -6,8 +8,16 @@
 #include "Graphics/Shader/InputLayout.h"
 #include "Graphics/Shader/PixelShader.h"
 #include "Graphics/Shader/VertexShader.h"
+#include "Resource/ResourceDescriptor.h"
 
 using namespace DirectX;
+
+struct MaterialDescriptor : public ResourceDescriptor
+{
+    std::string mtl_path;
+    std::string vs_path;
+    std::string ps_path;
+};
 
 class Material
 {

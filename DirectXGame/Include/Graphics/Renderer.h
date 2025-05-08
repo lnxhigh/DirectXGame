@@ -15,9 +15,7 @@
 #include "Graphics/SwapChain.h"
 #include "Graphics/Viewport.h"
 
-#include "Scene/Camera.h"
-#include "Scene/Entity/Entity.h"
-#include "Scene/Light.h"
+#include "Scene/Scene.h"
 
 class Window;
 
@@ -35,12 +33,12 @@ private:
 
 public:
     bool Init(Window* window);
-    void Render(const std::vector<std::unique_ptr<Entity>>& entities, Light& light, Camera& camera);
+    void Render(Scene& scene);
 
 private:
     void BeginFrame(); // Clear and set render target
-    void SetupPipeline(Light& light, Camera& camera); // Viewport, Camera, Light
-    void DrawScene(const std::vector<std::unique_ptr<Entity>>& entities); // Transform, Material, Mesh
+    void SetupScene(Scene& scene); // Viewport, Camera, Light
+    void DrawScene(Scene& scene); // Transform, Material, Mesh
     void EndFrame(); // Present
 
 public:

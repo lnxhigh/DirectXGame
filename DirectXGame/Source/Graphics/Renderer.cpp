@@ -42,12 +42,12 @@ void Renderer::BeginFrame()
     m_context.Get()->ClearDepthStencilView(m_frame_buffer.GetDSV(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-void Renderer::SetupPipeline(Light& light, Camera& camera)
+void Renderer::SetupScene(Scene& scene)
 {
     // Matrix buffer
 
-    XMMATRIX view = camera.GetViewMatrix();
-    XMMATRIX proj = camera.GetProjectionMatrix();
+    XMMATRIX view = scene.GetCamera().GetViewMatrix();
+    XMMATRIX proj = scene.GetCamera().GetProjectionMatrix();
 
     auto& matrix_data = m_matrix_buffer.Data();
     XMStoreFloat4x4(&matrix_data.view, XMMatrixTranspose(view));
@@ -55,20 +55,26 @@ void Renderer::SetupPipeline(Light& light, Camera& camera)
 
     // Light 
 
+    auto& light = scene.GetLight();
     light.Bind(m_context.Get());
+    light.Update(m_context.Get());
 
     // Camera
 
+    auto& camera = scene.GetCamera();
     camera.Bind(m_context.Get());
+    camera.Update(m_context.Get());
 
     // Viewport
 
     m_viewport.Bind(m_context.Get());
 }
 
-void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
+void Renderer::DrawScene(Scene& scene)
 {
     // Draw entities
+
+    auto& entities = scene.GetEntities();
 
     for (const auto& entity : entities)
     {
@@ -93,6 +99,7 @@ void Renderer::DrawScene(const std::vector<std::unique_ptr<Entity>>& entities)
         {
             if (Material* material = material_component->GetMaterial())
             {
+                material->Update(m_context.Get());
                 material->Bind(m_context.Get());
             }
         }
@@ -117,10 +124,10 @@ void Renderer::EndFrame()
     m_swap_chain.Present();
 }
 
-void Renderer::Render(const std::vector<std::unique_ptr<Entity>>& entities, Light& light, Camera& camera)
+void Renderer::Render(Scene& scene)
 {
     BeginFrame();
-    SetupPipeline(light, camera);
-    DrawScene(entities);
+    SetupScene(scene);
+    DrawScene(scene);
     EndFrame();
 }
