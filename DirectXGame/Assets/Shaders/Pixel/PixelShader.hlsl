@@ -15,9 +15,11 @@ float4 main(PixelIn input) : SV_TARGET
     float3 h = normalize(l + v);
 
     // Compute color
-    float3 ambient = ambient_color.rgb * diffuse_color.rgb;
-    float3 diffuse = light_color.rgb * diffuse_color.rgb * max(dot(n, l), 0.0f);
-    float3 specular = light_color.rgb * specular_color.rgb * pow(max(dot(n, h), 0.0f), shininess);
+    float4 diffuse_map_color = DiffuseMap.Sample(Sampler, input.texcoord);
     
-    return float4(ambient + diffuse + specular, 1.0f);
+    float3 diffuse = light_color.rgb * diffuse_map_color.rgb * max(dot(n, l), 0.0f);
+    float3 specular = light_color.rgb * specular_color.rgb * pow(max(dot(n, h), 0.0f), shininess);
+    float3 ambient = ambient_color.rgb * diffuse_map_color.rgb;
+    
+    return float4(diffuse + specular + ambient, 1.0f);
 }

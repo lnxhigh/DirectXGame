@@ -12,6 +12,7 @@
 #include "Graphics/Context.h"
 #include "Graphics/Device.h"
 #include "Graphics/FrameBuffer.h"
+#include "Graphics/Sampler.h"
 #include "Graphics/SwapChain.h"
 #include "Graphics/Viewport.h"
 
@@ -30,6 +31,8 @@ private:
     FrameBuffer m_frame_buffer;
     MatrixBuffer m_matrix_buffer;
     Viewport m_viewport;
+    Sampler m_sampler;
+
 
 public:
     bool Init(Window* window);

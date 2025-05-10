@@ -7,9 +7,9 @@
 #include "Graphics/Buffer/VertexBuffer.h"
 #include "Resource/ResourceDescriptor.h"
 
-struct MeshDescriptor : public ResourceDescriptor
+struct MeshDescriptor : ResourceDescriptor
 {
-	std::string path;
+
 };
 
 class Mesh

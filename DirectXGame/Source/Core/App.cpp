@@ -8,6 +8,8 @@
 #include "Graphics/Vertex.h"
 
 #include "Resource/Loader/MeshLoader.h"
+#include "Resource/Loader/TextureLoader.h"
+#include "Resource/Loader/ShaderLoader.h"
 
 using namespace DirectX;
 
@@ -61,35 +63,56 @@ int App::Run()
 void App::LoadResources(ID3D11Device* device, ID3D11DeviceContext* context)
 {
     // Register loaders
-
-    m_resource_manager.RegisterLoader<Mesh, MeshDescriptor>(std::make_unique<MeshLoader>());
-
-    // Import model
-    
-    MeshDescriptor desc;
-    desc.id = "cottage";
-    desc.name = "cottage";
-    desc.type = "mesh";
-    desc.path = "../DirectXGame/Assets/Models/cottage/cottage_obj.obj";
-
-    std::shared_ptr<void> raw = m_resource_manager.Load(desc, m_renderer.GetDevice().Get());
-    std::shared_ptr<Mesh> cottage = std::static_pointer_cast<Mesh>(raw);
-    
-    m_mesh = *cottage.get();
+    //
+    // m_resource_manager.RegisterLoader<Mesh, MeshDescriptor>(std::make_unique<MeshLoader>());
+    // std::shared_ptr<Mesh> cottage = m_resource_manager.Load<Mesh, MeshDescriptor>(desc, m_renderer.GetDevice().Get());
 
     // Load primitive mesh
     // 
     // m_icosahedron = Icosahedron(1.0f);
     // std::vector<Vertex>& vertices = m_icosahedron.vertices;
     // std::vector<unsigned int>& indices = m_icosahedron.indices;
-    // 
+
+    // Load model
+    
+    MeshDescriptor mesh_desc = {};
+    mesh_desc.id = "cottage";
+    mesh_desc.name = "cottage";
+    mesh_desc.type = "mesh";
+    mesh_desc.path = "../DirectXGame/Assets/Models/cottage/cottage_obj.obj";
+
+    auto mesh_loader = MeshLoader();
+    std::shared_ptr<Mesh> cottage = mesh_loader.Load(mesh_desc, m_renderer.GetDevice().Get());
+    m_mesh = *cottage.get();
+
+    // Load Texture
+
+    TextureDescriptor tex_desc = {};
+    tex_desc.id = "cottage_texture";
+    tex_desc.name = "cottage_texture";
+    tex_desc.type = "texture";
+    tex_desc.path = "../DirectXGame/Assets/Textures/cottage_textures/cottage_diffuse.png";
+
+    auto texture_loader = TextureLoader();
+    auto diffuse_map = texture_loader.Load(tex_desc, m_renderer.GetDevice().Get());
+    m_material.diffuse_map = diffuse_map;
+
+    // Load Shader
+
+    ShaderDescriptor shader_desc = {};
+    shader_desc.id = "default_shader";
+    shader_desc.name = "default_shader";
+    shader_desc.type = "shader";
+    shader_desc.vertex_shader_path = "../DirectXGame/Assets/Shaders/Vertex/VertexShader.hlsl";
+    shader_desc.pixel_shader_path = "../DirectXGame/Assets/Shaders/Pixel/PixelShader.hlsl";
+
+    auto shader_loader = ShaderLoader();
+    auto shader = shader_loader.Load(shader_desc, m_renderer.GetDevice().Get());
+    m_material.shader = shader;
+
     // Load material
 
-    const wchar_t* vs_path = L"../DirectXGame/Assets/Shaders/Vertex/VertexShader.hlsl";
-    const wchar_t* ps_path = L"../DirectXGame/Assets/Shaders/Pixel/PixelShader.hlsl";
-
-    m_material.Init(device, vs_path, ps_path);
-
+    m_material.Init(device);
     m_material.SetDiffuse(XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f));
     m_material.SetSpecular(XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f));
     m_material.SetShininess(8.0f);

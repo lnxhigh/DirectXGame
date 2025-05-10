@@ -41,19 +41,32 @@ cbuffer CameraBuffer : register(b3)
     float padding_camera_position;
 }
 
+// Diffuse Map
+
+Texture2D DiffuseMap : register(t0);
+
+// Sampler State
+
+SamplerState Sampler : register(s0);
+
+// VertexIn VertexOut PixelIn
+
 struct VertexIn
 {
     float3 position : POSITION;
     float3 normal : NORMAL;
+    float2 texcoord : TEXCOORD0;
     float4 color : COLOR;
 };
 
 struct VertexOut
 {
     float4 position : SV_POSITION;
-    float3 world_position: TEXCOORD0;
-    float3 world_normal : TEXCOORD1;
+    float2 texcoord : TEXCOORD0;
     float4 color : COLOR;
+    
+    float3 world_position: TEXCOORD1;
+    float3 world_normal : TEXCOORD2;
 };
 
 typedef VertexOut PixelIn;

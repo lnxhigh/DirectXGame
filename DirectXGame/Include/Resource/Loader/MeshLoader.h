@@ -1,5 +1,4 @@
 #pragma once
-#include <filesystem>
 #include "Resource/Loader/IResourceLoader.h"
 #include "Resource/Mesh.h"
 

@@ -1,5 +1,6 @@
 #include "Resource/Loader/MeshLoader.h"
 
+#include <filesystem>
 #include <map>
 #include <string>
 #include <vector>
@@ -9,16 +10,18 @@
 std::shared_ptr<Mesh> MeshLoader::Load(const MeshDescriptor& descriptor, ID3D11Device* device) 
 {
     // Read from file
-
+    
     tinyobj::ObjReader reader;
     tinyobj::ObjReaderConfig config;
 
-    if (!reader.ParseFromFile(descriptor.path, config)) {
+    if (!reader.ParseFromFile(descriptor.path, config)) 
+    {
         OutputDebugStringA(reader.Error().c_str());
         return nullptr;
     }
 
-    if (!reader.Warning().empty()) {
+    if (!reader.Warning().empty()) 
+    {
         OutputDebugStringA(reader.Warning().c_str());
     }
 
@@ -59,8 +62,8 @@ std::shared_ptr<Mesh> MeshLoader::Load(const MeshDescriptor& descriptor, ID3D11D
 
                 if (idx.texcoord_index >= 0) 
                 {
-                    // vertex.texcoord.x = attrib.texcoords[2 * idx.texcoord_index + 0];
-                    // vertex.texcoord.y = 1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]; // flip V
+                    vertex.texcoord.x = attrib.texcoords[2 * idx.texcoord_index + 0];
+                    vertex.texcoord.y = 1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]; // flip V
                 }
 
                 if (map_vertices.count(vertex) == 0) {

@@ -9,6 +9,7 @@ struct Vertex
 {
     XMFLOAT3 position;
     XMFLOAT3 normal;
+    XMFLOAT2 texcoord;
     XMFLOAT4 color;
 
     bool operator<(const Vertex& other) const 

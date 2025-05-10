@@ -10,11 +10,18 @@ set(CMAKE_CXX_STANDARD 17)
 # Add include directories
 include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include)
 
+# Add link directories
+link_directories(${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Lib)
+
 # Find all header and source files
 file(GLOB_RECURSE HEADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include/*.h)
 source_group(TREE "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Include" PREFIX "Header Files" FILES ${HEADERS})
 
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cpp)
+file(GLOB_RECURSE SOURCES 
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cc
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source/*.cxx
+)
 source_group(TREE "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Source" PREFIX "Source Files" FILES ${SOURCES})
 
 # Create executable with project name
@@ -22,6 +29,7 @@ add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${HEADERS} ${SHADERS})
 
 # Link Direct3D 11 core libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE d3d11 dxgi d3dcompiler)
+target_link_libraries(${PROJECT_NAME} PRIVATE DirectXTex)
 
 # Force Unicode character set
 target_compile_definitions(${PROJECT_NAME} PRIVATE UNICODE _UNICODE)
@@ -71,3 +79,6 @@ file(GLOB_RECURSE COMMON_SHADERS ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Assets/Shad
 foreach(SHADER ${COMMON_SHADERS})
 	set_property(SOURCE ${SHADER} PROPERTY VS_SETTINGS "ExcludedFromBuild=true")
 endforeach()
+
+# Set as Startup Project
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT DirectXGame)

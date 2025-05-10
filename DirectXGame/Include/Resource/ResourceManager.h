@@ -24,31 +24,34 @@ public:
         m_loaders.emplace_back(std::make_unique<ResourceLoaderAdapter<T, DescriptorT>>(std::move(loader)));
     }
 
-    std::shared_ptr<void> Load(const ResourceDescriptor& descriptor, ID3D11Device* device) 
-    {
+    template <typename T, typename DescriptorT>
+    std::shared_ptr<T> Load(const DescriptorT& descriptor, ID3D11Device* device)
+    {        
         // Check cache
 
-        auto it = m_cache.find(descriptor.id);
+        std::string key = descriptor.id;
+
+        auto it = m_cache.find(key);
         if (it != m_cache.end())
-            return it->second;
+            return std::static_pointer_cast<T>(it->second);
 
         // Load resource
 
         for (auto& loader : m_loaders) {
             if (loader->Supports(descriptor)) {
-                auto ptr = loader->Load(descriptor, device);
+                auto resource = loader->Load(descriptor, device);
                 
-                if (!ptr) 
-                    throw std::runtime_error("Error: Loader failed to load: " + descriptor.id);
+                if (!resource) 
+                    throw std::runtime_error("Error: Loader failed to load: " + key);
 
-                m_cache[descriptor.id] = ptr;
-                return ptr;
+                m_cache[key] = resource;
+                return std::static_pointer_cast<T>(resource);
             }
         }
 
         // Return nullptr if fail to load
 
-        throw std::runtime_error("Error: No loader supports descriptor: " + descriptor.id);
+        throw std::runtime_error("Error: No loader supports descriptor: " + key);
 
         return nullptr;
     }

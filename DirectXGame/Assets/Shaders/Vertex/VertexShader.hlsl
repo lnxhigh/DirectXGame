@@ -10,9 +10,11 @@ VertexOut main(VertexIn input)
     float4 proj_pos = mul(view_pos, proj);
     
     output.position = proj_pos;
+    output.texcoord = input.texcoord;
+    output.color = input.color;
+    
     output.world_position = world_pos.xyz;
     output.world_normal = normalize(mul(input.normal, (float3x3)world_inv_transpose));
-    output.color = input.color;
 
     return output;
 }

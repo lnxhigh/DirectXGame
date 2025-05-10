@@ -30,6 +30,10 @@ bool Renderer::Init(Window* window)
 
     m_viewport.Init(window);
 
+    // Sampler
+
+    m_sampler.Init(m_device.Get());
+
     return true;
 }
 
@@ -68,6 +72,10 @@ void Renderer::SetupScene(Scene& scene)
     // Viewport
 
     m_viewport.Bind(m_context.Get());
+
+    // Sampler
+
+    m_sampler.Bind(m_context.Get());
 }
 
 void Renderer::DrawScene(Scene& scene)
