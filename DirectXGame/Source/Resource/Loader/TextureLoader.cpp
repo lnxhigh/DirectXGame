@@ -27,9 +27,27 @@ std::shared_ptr<Texture> TextureLoader::Load(const TextureDescriptor& descriptor
         return nullptr;
     }
 
+    // Convert BGRA to RGBA
+
+    DirectX::ScratchImage converted;
+
+    hr = DirectX::Convert(
+        *scratch.GetImage(0, 0, 0),
+        DXGI_FORMAT_R8G8B8A8_UNORM,
+        DirectX::TEX_FILTER_DEFAULT,
+        DirectX::TEX_THRESHOLD_DEFAULT,
+        converted
+    );
+
+    if (FAILED(hr))
+    {
+        throw std::runtime_error("Error: Failed to convert BGRA image to RGBA image " + descriptor.path);
+        return nullptr;
+    }
+
     // Initialize texture
 
-    const DirectX::Image* img = scratch.GetImage(0, 0, 0);
+    const DirectX::Image* img = converted.GetImage(0, 0, 0);
     std::shared_ptr<Texture> texture = std::make_shared<Texture>();
     texture->Init(device, *img);
 

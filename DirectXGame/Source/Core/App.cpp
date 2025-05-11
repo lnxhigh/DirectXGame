@@ -74,30 +74,60 @@ void App::LoadResources(ID3D11Device* device, ID3D11DeviceContext* context)
     // std::vector<unsigned int>& indices = m_icosahedron.indices;
 
     // Load model
-    
-    MeshDescriptor mesh_desc = {};
-    mesh_desc.id = "cottage";
-    mesh_desc.name = "cottage";
-    mesh_desc.type = "mesh";
-    mesh_desc.path = "../DirectXGame/Assets/Models/cottage/cottage_obj.obj";
 
     auto mesh_loader = MeshLoader();
-    std::shared_ptr<Mesh> cottage = mesh_loader.Load(mesh_desc, m_renderer.GetDevice().Get());
-    m_mesh = *cottage.get();
+
+    //// cottage
+    
+    MeshDescriptor cottage_mesh_desc = {};
+    cottage_mesh_desc.id = "cottage";
+    cottage_mesh_desc.name = "cottage";
+    cottage_mesh_desc.type = "mesh";
+    cottage_mesh_desc.path = "../DirectXGame/Assets/Models/cottage/cottage_obj.obj";
+
+    std::shared_ptr<Mesh> cottage = mesh_loader.Load(cottage_mesh_desc, m_renderer.GetDevice().Get());
+    m_cottage_mesh = cottage;
+
+    //// watchtower
+
+    MeshDescriptor watchtower_mesh_desc = {};
+    watchtower_mesh_desc.id = "watchtower";
+    watchtower_mesh_desc.name = "watchtower";
+    watchtower_mesh_desc.type = "mesh";
+    watchtower_mesh_desc.path = "../DirectXGame/Assets/Models/watchtower/wooden watch tower2.obj";
+
+    std::shared_ptr<Mesh> watchtower = mesh_loader.Load(watchtower_mesh_desc, m_renderer.GetDevice().Get());
+    m_watchtower_mesh = watchtower;
 
     // Load Texture
 
-    TextureDescriptor tex_desc = {};
-    tex_desc.id = "cottage_texture";
-    tex_desc.name = "cottage_texture";
-    tex_desc.type = "texture";
-    tex_desc.path = "../DirectXGame/Assets/Textures/cottage_textures/cottage_diffuse.png";
-
     auto texture_loader = TextureLoader();
-    auto diffuse_map = texture_loader.Load(tex_desc, m_renderer.GetDevice().Get());
-    m_material.diffuse_map = diffuse_map;
+
+    //// cottage
+
+    TextureDescriptor cottage_tex_desc = {};
+    cottage_tex_desc.id = "cottage_texture";
+    cottage_tex_desc.name = "cottage_texture";
+    cottage_tex_desc.type = "texture";
+    cottage_tex_desc.path = "../DirectXGame/Assets/Textures/cottage_textures/cottage_diffuse.png";
+
+    auto cottage_diffuse_map = texture_loader.Load(cottage_tex_desc, m_renderer.GetDevice().Get());
+    m_cottage_material->diffuse_map = cottage_diffuse_map;
+
+    //// watchtower
+
+    TextureDescriptor watchtower_tex_desc = {};
+    watchtower_tex_desc.id = "watchtower_texture";
+    watchtower_tex_desc.name = "watchtower_texture";
+    watchtower_tex_desc.type = "texture";
+    watchtower_tex_desc.path = "../DirectXGame/Assets/Textures/watchtower_textures/Wood_Tower_Col.png";
+
+    auto watchtower_diffuse_map = texture_loader.Load(watchtower_tex_desc, m_renderer.GetDevice().Get());
+    m_watchtower_material->diffuse_map = watchtower_diffuse_map;
 
     // Load Shader
+
+    auto shader_loader = ShaderLoader();
 
     ShaderDescriptor shader_desc = {};
     shader_desc.id = "default_shader";
@@ -106,16 +136,43 @@ void App::LoadResources(ID3D11Device* device, ID3D11DeviceContext* context)
     shader_desc.vertex_shader_path = "../DirectXGame/Assets/Shaders/Vertex/VertexShader.hlsl";
     shader_desc.pixel_shader_path = "../DirectXGame/Assets/Shaders/Pixel/PixelShader.hlsl";
 
-    auto shader_loader = ShaderLoader();
     auto shader = shader_loader.Load(shader_desc, m_renderer.GetDevice().Get());
-    m_material.shader = shader;
+
+    //// cottage
+
+    m_cottage_material->shader = shader;
+
+    //// watchtower
+
+    m_watchtower_material->shader = shader;
 
     // Load material
 
-    m_material.Init(device);
-    m_material.SetDiffuse(XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f));
-    m_material.SetSpecular(XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f));
-    m_material.SetShininess(8.0f);
+    //// cottage
+
+    m_cottage_material->Init(device);
+
+    auto& cottage_material_data = m_cottage_material->material_data;
+
+    cottage_material_data.diffuse = XMFLOAT4(0.64f, 0.64f, 0.64f, 1.0f);
+    cottage_material_data.specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    cottage_material_data.ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    cottage_material_data.emissive = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+    
+    cottage_material_data.shininess = 2.0f;
+
+    //// watchtower
+
+    m_watchtower_material->Init(device);
+
+    auto& watchtower_material_data = m_cottage_material->material_data;
+
+    watchtower_material_data.diffuse = XMFLOAT4(0.397386f, 0.397386f, 0.397386f, 1.0f);
+    watchtower_material_data.specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    watchtower_material_data.ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    watchtower_material_data.emissive = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    watchtower_material_data.shininess = 1.0f;
 }
 
 void App::LoadScene(ID3D11DeviceContext* context)
@@ -127,30 +184,26 @@ void App::LoadScene(ID3D11DeviceContext* context)
     //// Add component
 
     entity->AddComponent<TransformComponent>();
-    entity->AddComponent<MeshComponent>(&m_mesh);
-    entity->AddComponent<MaterialComponent>(&m_material);
+    entity->AddComponent<MeshComponent>(m_cottage_mesh);
+    entity->AddComponent<MaterialComponent>(m_cottage_material);
 
     m_scene.AddEntity(entity);
-
-    /*
     
     // Second entity
 
-    std::unique_ptr<Entity> other = std::make_unique<Entity>();
+    std::shared_ptr<Entity> other = std::make_unique<Entity>();
 
     //// Add component
 
     auto* transform = other->AddComponent<TransformComponent>();
-    other->AddComponent<MeshComponent>(&m_mesh);
-    other->AddComponent<MaterialComponent>(&m_material);
+    other->AddComponent<MeshComponent>(m_watchtower_mesh);
+    other->AddComponent<MaterialComponent>(m_watchtower_material);
 
     //// Set component
 
-    transform->position = XMFLOAT3(2.0f, 2.0f, 2.0f);
-    transform->rotation = XMFLOAT3(1.0f, 2.0f, 3.0f);
-    transform->scale = XMFLOAT3(0.5f, 0.5f, 0.5f);
+    transform->position = XMFLOAT3(-30.0f, -3.0f, -20.0f);
+    transform->rotation = XMFLOAT3(0.0f, 1.57f, 0.0f);
+    transform->scale = XMFLOAT3(5.0f, 5.0f, 5.0f);
 
     m_scene.AddEntity(other);
-
-    */
 }

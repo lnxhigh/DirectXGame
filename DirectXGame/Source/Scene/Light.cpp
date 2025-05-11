@@ -16,9 +16,11 @@ void Light::Update(ID3D11DeviceContext* context)
 {
 	auto& light_data = m_light_buffer.Data();
 
-	light_data.color = m_color;
-	light_data.direction = m_direction;
-	light_data.ambient = m_ambient;
+	light_data.diffuse = diffuse;
+	light_data.specular = specular;
+	light_data.ambient = ambient;
+
+	light_data.direction = direction;
 
 	m_light_buffer.Update(context);
 }

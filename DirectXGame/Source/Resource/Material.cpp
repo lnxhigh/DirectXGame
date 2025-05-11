@@ -14,10 +14,14 @@ bool Material::Init(ID3D11Device* device)
 
 void Material::Update(ID3D11DeviceContext* context)
 {
-    auto& material_data = m_material_buffer.Data();
-    material_data.diffuse = m_material_data.diffuse;
-    material_data.specular = m_material_data.specular;
-    material_data.shininess = m_material_data.shininess;
+    auto& buffer_data = m_material_buffer.Data();
+
+    buffer_data.diffuse = material_data.diffuse;
+    buffer_data.specular = material_data.specular;
+    buffer_data.ambient = material_data.ambient;
+    buffer_data.emissive = material_data.emissive;
+
+    buffer_data.shininess = material_data.shininess;
 
     m_material_buffer.Update(context);
 }

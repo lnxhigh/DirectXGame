@@ -1,16 +1,17 @@
 #pragma once
-#include "Resource/Mesh.h"
+#include <memory>
 #include "Scene/Component/Component.h"
+#include "Resource/Mesh.h"
 
-class MeshComponent : public Component 
+class MeshComponent : public Component
 {
 private:
-    Mesh* m_mesh = nullptr;
+    std::shared_ptr<Mesh> m_mesh = std::make_shared<Mesh>();
 
 public:
     MeshComponent() = default;
-    explicit MeshComponent(Mesh* mesh) : m_mesh(mesh) {}
+    explicit MeshComponent(std::shared_ptr<Mesh> mesh) : m_mesh(mesh) {}
 
-    Mesh* GetMesh() const { return m_mesh; }
-    void SetMesh(Mesh* mesh) { m_mesh = mesh; }
+    std::shared_ptr<Mesh> GetMesh() const { return m_mesh; }
+    void SetMesh(std::shared_ptr<Mesh> mesh) { m_mesh = mesh; }
 };

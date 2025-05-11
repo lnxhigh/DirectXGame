@@ -12,12 +12,11 @@ Camera::Camera()
 {
 	// Set initial transform
 
-	m_eye = XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f);
-	m_at = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
-	m_up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // w = 0
+	XMFLOAT4 eye = XMFLOAT4(0.0f, 0.0f, -1.0f, 1.0f);
+	XMFLOAT4 at = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+	XMFLOAT4 up = XMFLOAT4(0.0f, 1.0f, 0.0f, 0.0f);
 
-	m_forward = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f); // w = 0
-	m_right = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f); // w = 0
+	SetTransform(eye, at, up);
 }
 
 Camera::~Camera()
@@ -109,7 +108,7 @@ void Camera::SetTransform(XMFLOAT4 eye, XMFLOAT4 at, XMFLOAT4 up)
 	m_at = XMLoadFloat4(&at);
 	m_up = XMLoadFloat4(&up);
 
-	m_forward = m_at - m_eye;
+	m_forward = XMVector3Normalize(m_at - m_eye);
 	m_right = XMVector3Normalize(XMVector3Cross(m_up, m_forward));
 
 	m_pitch = asinf(XMVectorGetY(m_forward));

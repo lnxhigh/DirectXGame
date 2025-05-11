@@ -26,6 +26,7 @@ private:
 public:
 	bool Init(Window* window, ID3D11Device* device, InputSystem* input_system);
 	void Update(float dt);
+	void Update(ID3D11DeviceContext* context);
 
 public:
 	void AddEntity(std::shared_ptr<Entity> entity) { m_entities.push_back(std::move(entity)); }

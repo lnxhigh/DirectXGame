@@ -15,10 +15,12 @@ cbuffer MatrixBuffer : register(b0)
 
 cbuffer LightBuffer : register(b1)
 {
-    float4 light_color; // color + intensity
+    float4 light_diffuse; // color + intensity
+    float4 light_specular;
+    float4 light_ambient;
+    
     float3 light_direction;
     float padding_light_direction;
-    float4 ambient_color;
 }
 
 // MaterialBuffer : b2
@@ -28,6 +30,9 @@ cbuffer MaterialBuffer : register(b2)
 {
     float4 diffuse_color;
     float4 specular_color;
+    float4 ambient_color;
+    float4 emissive_color;
+    
     float shininess;
     float3 padding_shininess;
 }

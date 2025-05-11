@@ -7,10 +7,12 @@ using namespace DirectX;
 
 struct alignas(16) LightBufferData
 {
-    XMFLOAT4 color;
+    XMFLOAT4 diffuse;
+    XMFLOAT4 specular;
+    XMFLOAT4 ambient;
+
     XMFLOAT3 direction;
     float padding; // 16-byte alignment
-    XMFLOAT4 ambient;
 };
 
 using LightBuffer = ConstantBuffer<LightBufferData>;

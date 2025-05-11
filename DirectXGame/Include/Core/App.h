@@ -52,6 +52,9 @@ private:
     Scene m_scene;
     ResourceManager m_resource_manager;
 
-    Mesh m_mesh;
-    Material m_material;
+    std::shared_ptr<Mesh> m_cottage_mesh = std::make_shared<Mesh>();
+    std::shared_ptr<Material> m_cottage_material = std::make_shared<Material>();
+
+    std::shared_ptr<Mesh> m_watchtower_mesh = std::make_shared<Mesh>();
+    std::shared_ptr<Material> m_watchtower_material = std::make_shared<Material>();
 };

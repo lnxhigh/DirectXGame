@@ -105,7 +105,7 @@ void Renderer::DrawScene(Scene& scene)
 
         if (auto* material_component = entity->GetComponent<MaterialComponent>())
         {
-            if (Material* material = material_component->GetMaterial())
+            if (auto material = material_component->GetMaterial())
             {
                 material->Update(m_context.Get());
                 material->Bind(m_context.Get());
@@ -116,7 +116,7 @@ void Renderer::DrawScene(Scene& scene)
 
         if (auto* mesh_component = entity->GetComponent<MeshComponent>())
         {
-            if (Mesh* mesh = mesh_component->GetMesh())
+            if (auto mesh = mesh_component->GetMesh())
             {
                 mesh->Bind(m_context.Get());
                 m_context.Get()->DrawIndexed(mesh->GetIndexBuffer().GetIndexCount(), 0, 0);

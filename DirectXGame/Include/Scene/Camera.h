@@ -43,7 +43,7 @@ private:
     
     // Speed parameters
 
-    float m_move_speed = 1.5f;
+    float m_move_speed = 2.5f;
     float m_sensitivity = 0.002f;
 
 public:
