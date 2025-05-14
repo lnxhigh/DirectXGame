@@ -71,6 +71,15 @@ Mesh, Material 등의 자원을 관리하는 클래스를 포함합니다.
 
 - **Mesh**: 정점 배열과 인덱스 배열을 파라미터로 받아서 정점 버퍼와 인덱스 버퍼를 구성합니다.
 - **Material**: 쉐이더, 텍스처, 머티리얼 속성 등을 모아 놓은 클래스입니다.
+- Texture: 텍스처를 생성하고 소유하는 클래스입니다.
+- Shader: Shader 들을 생성하고 소유하는 클래스입니다.
+
+- IResourceLoader: Loader 들을 추상화한 클래스입니다.
+- ResourceDescriptor: Resource 의 id, name, type, path 등 정보를 기술한 구조체입니다.
+
+- MeshLoader: TinyObjLoader 를 바탕으로 OBJ 파일을 로드합니다.
+- TextureLoader: DirectXTex 를 바탕으로 이미지 파일을 로드합니다.
+- ShaderLoader: 쉐이더를 로드합니다.
 
 ### Scene
 
@@ -89,3 +98,20 @@ Entity, Component 등 씬과 관련 있는 클래스를 포함합니다.
 윈도우를 표시하기 위한 클래스를 포함합니다.
 
 - **Window**: 윈도우 클래스를 등록하고 창을 띄우는 클래스입니다.
+
+## Assets
+
+### Models
+
+모델 파일을 저장합니다.
+
+- cottage: [Abandoned Cottage House](https://free3d.com/3d-model/abandoned-cottage-house-825251.html) 모델입니다.
+- watchtower: [Watch Tower made of Wood](https://free3d.com/3d-model/watch-tower-made-of-wood-94934.html) 모델입니다.
+
+### Shaders
+
+쉐이더 파일을 저장합니다.
+
+- VertexShader: 정점 쉐이더를 기술합니다. Matrix Buffer 를 바탕으로 삼각형을 clip space 로 옮깁니다.
+- PixelShader: 픽셀 쉐이더를 기술합니다. [Blinn–Phong reflection model](https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model) 을 사용해서 조명을 처리합니다.
+- ShaderCommon: 쉐이더 파일에서 공통적으로 쓰이는 버퍼와 구조체를 정의합니다.
